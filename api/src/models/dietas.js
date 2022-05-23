@@ -12,7 +12,7 @@ module.exports = (sequelize) => {
 			defaultValue: DataTypes.UUIDV4,
 		},
 		title: {
-			type: DataTypes.STRING,
+			type: DataTypes.ARRAY(DataTypes.STRING),
 			allowNull: false,
 		},
 	});

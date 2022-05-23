@@ -129,7 +129,7 @@ const dietTypes = async function (req, res, next) {
 			'Low ODMAP',
 			'Whole30',
 		];
-		res.send(FoodTypes.join(', - - - ,   '));
+		res.send(FoodTypes);
 	}
 };
 

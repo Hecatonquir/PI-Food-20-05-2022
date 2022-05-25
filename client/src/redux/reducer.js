@@ -2,7 +2,7 @@
 export const GET_FOOD = 'GET_FOOD';
 
 const initialState = {
-	foods: [],
+	recipes: [],
 	types: [],
 };
 
@@ -11,7 +11,7 @@ function reducer(state = initialState, action) {
 		case GET_FOOD:
 			return {
 				...state,
-				foods: action.payload,
+				recipes: action.payload,
 			};
 
 		default:

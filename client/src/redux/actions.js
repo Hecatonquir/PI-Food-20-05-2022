@@ -1,10 +1,49 @@
 import axios from 'axios';
-import { GET_FOOD } from './reducer';
+import * as R from './reducer';
 
 export function getAllRecipes() {
 	return async (dispatch) => {
 		return axios('http://localhost:3001/allrecipes').then((res) =>
-			dispatch({ type: GET_FOOD, payload: res.data })
+			dispatch({ type: R.ALL_FOOD, payload: res.data })
 		);
+	};
+}
+
+export function getTypes() {
+	return async (dispatch) => {
+		return axios('http://localhost:3001/types').then((res) =>
+			dispatch({ type: R.ALL_DIETS, payload: res.data })
+		);
+	};
+}
+
+export function getFoodByName(info) {
+	let title = '';
+	if (info) title = info.title;
+	
+	return async (dispatch) => {
+		return axios(`http://localhost:3001/recipes?name=${title}`).then((res) =>
+			dispatch({ type: R.FOOD_NAME, payload: res.data })
+		);
+	};
+}
+
+export function createRecipe(info) {
+	return { type: R.NEW_RECIPE, payload: info };
+}
+
+/* export function createRecipe(info) {
+	return async (dispatch) => {
+		return axios('http://localhost:3001/recipe').then((res) =>
+			dispatch({ type: R.ALL_FOOD, payload: res.data })
+		);
+	};
+} */
+
+export function getDetail(id) {
+	return async function (dispatch) {
+		return fetch(`http://localhost:3001/recipes/${id}`)
+			.then((res) => res.json())
+			.then((post) => dispatch({ type: R.SET_DETAIL, payload: post }));
 	};
 }

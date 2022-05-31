@@ -6,7 +6,6 @@ const {
 	loadDietTypes,
 	newRecipe,
 	getAllRecipes,
-
 } = require('../functions');
 
 routes.use(express.json());
@@ -16,7 +15,9 @@ routes.get('/recipes/:idReceta', getFoodByID);
 routes.get('/types', loadDietTypes);
 routes.post('/recipe', newRecipe);
 
-routes.get('/allrecipes', getAllRecipes);
-
+routes.get('/allrecipes', async (req, res, next) => {
+	let allRecipes = await getAllRecipes();
+	res.send(allRecipes);
+});
 
 module.exports = routes;

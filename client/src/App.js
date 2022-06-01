@@ -1,8 +1,9 @@
 import './App.css';
-//import { Route, Switch } from 'react-router-dom';
-import Navbar from './components/Navbar';
 import { Route } from 'react-router-dom';
-import Home from './components/Home';
+
+import Navbar from './components/00-Navbar';
+import LandingPage from './components/01-LandingPage';
+import Home from './components/02-Home';
 import RecipeName from './components/getFoodByName';
 import loadDietTypes from './components/getTypes';
 import NewRecipe from './components/newRecipe';
@@ -15,7 +16,8 @@ function App() {
 		<div className='App'>
 			<Route path={'/'} component={Navbar} /> {/*IDEM A: <Navbar />*/}
 			<h3>MAXI FOOD</h3>
-			<Route exact path={'/'} component={Home} />
+			<Route exact path={'/'} component={LandingPage} />
+			<Route exact path={'/home'} component={Home} />
 			<Route exact path={'/recipes'} component={RecipeName} />
 			{/* <Route exact path={'/recipes/:idReceta'} component={getFoodByID} /> */}
 			{/* CREO q a estas 2 las puedo poner en una sola url que reciba datos por query */}

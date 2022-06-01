@@ -6,7 +6,7 @@ export default function Navbar() {
 		<nav>
 			{/*<nav> es CASI lo mismo que usar <div> o usar <react.fragment>*/}
 
-			<NavLink to='/'> Home </NavLink>
+			<NavLink to='/home'> Home </NavLink>
 			<br />
 			<NavLink to='/allrecipes'> All recipes </NavLink>
 			<br />

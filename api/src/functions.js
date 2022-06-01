@@ -1,12 +1,12 @@
 const axios = require('axios');
 const { Recipe, DietType } = require('./db.js');
-const Key = '1a5c28a9acbc49dca45aadfd2bf8c60f';
+const Key = 'e38e3779809f4b03913a4172bfc2d236';
 /* 
 Key = '';
-Key = '925e0f5660864c49947e0de9e9add261';
-Key = 'dff6bd8e57744085907adfbd67504b22';
-Key = '81615974cf994ce9b0f2d9fea4616035';
-Key = 'e38e3779809f4b03913a4172bfc2d236';
+Key = '';
+Key = '';
+Key = '';
+Key = '';
 */
 
 // LLAMA LAS PRIMERAS 100 RECETAS DE LA API
@@ -14,7 +14,7 @@ const getApiRecipes = async () => {
 	try {
 		const apiFood = (
 			await axios.get(
-				`https://api.spoonacular.com/recipes/complexSearch?offset=1&number=1&apiKey=${Key}&addRecipeInformation=true`
+				`https://api.spoonacular.com/recipes/complexSearch?offset=0&number=50&apiKey=${Key}&addRecipeInformation=true`
 			)
 		).data.results;
 
@@ -67,7 +67,7 @@ const getFoodByName = async (req, res, next) => {
 	let allRecipes = await getAllRecipes();
 	try {
 		let MatchingFood = allRecipes.filter((e) =>
-			e.title.toUpperCase().includes(name.toUpperCase())
+			e.title.toLowerCase().includes(name.toLowerCase())
 		);
 		res.send(MatchingFood);
 	} catch (error) {
@@ -83,8 +83,10 @@ const getFoodByID = async (req, res, next) => {
 		const created_recipes = await Recipe.findAll();
 		let found = created_recipes.find((e) => e.id == idReceta);
 		return res.send(found);
-	} else idReceta = parseInt(idReceta);
-	var IdFood = {};
+	} else {
+		idReceta = parseInt(idReceta);
+		var IdFood = {};
+	}
 
 	try {
 		const apiFood = (
@@ -131,7 +133,7 @@ const newRecipe = async function (req, res, next) {
 			image,
 		});
 		let createdDiet = await DietType.findAll({
-			where: { title: diets.map((e) => e.toUpperCase()) },
+			where: { title: diets.map((e) => e.toLowerCase()) },
 		});
 		createdRecipes.addDietType(createdDiet);
 		res.send('createdRecipes');
@@ -145,12 +147,14 @@ const loadDietTypes = async function (req, res, next) {
 	try {
 		const apiTypes = await getApiRecipes();
 		await apiTypes.map((obj) =>
-			obj.diets.map((e) => DietType.findOrCreate({ where: { title: e.toUpperCase() } }))
+			obj.diets.map((e) => DietType.findOrCreate({ where: { title: e.toLowerCase() } }))
 		);
 		const dbTypes = await DietType.findAll();
 		return res.send(dbTypes.map((e) => e.title));
 	} catch (error) {
-		res.send('No hay datos guardados');
+		const dbTypes = await DietType.findAll();
+		return res.send(dbTypes.map((e) => e.title));
+		/* res.send('No hay datos guardados'); */
 	}
 };
 
@@ -169,7 +173,7 @@ const upDietTypes = async function (req, res, next) {
 		{ title: 'Whole30' },
 	];
 	try {
-		FoodTypes.map((e) => DietType.findOrCreate({ where: { title: e.title.toUpperCase() } }));
+		FoodTypes.map((e) => DietType.findOrCreate({ where: { title: e.title.toLowerCase() } }));
 		res.send('Tipos cargados a la DB');
 	} catch (error) {
 		return 'No se guardaron los Tipos en la DB';

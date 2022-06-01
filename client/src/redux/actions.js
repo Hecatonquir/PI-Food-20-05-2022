@@ -3,9 +3,9 @@ import * as R from './reducer';
 
 export function getAllRecipes() {
 	return async (dispatch) => {
-		return axios('http://localhost:3001/allrecipes').then((res) =>
-			dispatch({ type: R.ALL_FOOD, payload: res.data })
-		);
+		return axios
+			.get('http://localhost:3001/allrecipes')
+			.then((res) => dispatch({ type: R.ALL_FOOD, payload: res.data }));
 	};
 }
 
@@ -20,7 +20,7 @@ export function getTypes() {
 export function getFoodByName(info) {
 	let title = '';
 	if (info) title = info.title;
-	
+
 	return async (dispatch) => {
 		return axios(`http://localhost:3001/recipes?name=${title}`).then((res) =>
 			dispatch({ type: R.FOOD_NAME, payload: res.data })

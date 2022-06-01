@@ -11,17 +11,16 @@ export function DetalleRecetaCreada(props) {
 
 	React.useEffect(() => {
 		props.getDetail(id);
-	}, [props, id]);
-	console.log('PROPS.DETAAAAAAAAAAAAAAAAAAAAAAIIIL');
-	console.log(props.detail);
-	console.log();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []); // ACA ME HACE UN BUCLE INFINITOOO
+
 	return (
-		<div>
+		<div key={id}>
 			<h2>El usuario con Id: {id}</h2>
 			{Object.keys(props.detail).length > 0 ? (
-				<div>
+				<div key={id}>
 					<h4>ESTO ES EL TITULO: {props.detail.title}</h4>
-					<h5>ESTO ES LA IMAGEN: {props.detail.image}</h5>
+					<img src={props.detail.image} alt={props.detail.title} />
 				</div>
 			) : null}
 		</div>

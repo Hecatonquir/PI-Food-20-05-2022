@@ -47,3 +47,11 @@ export function filterByTypes(payload) {
 export function filterCreatedRecipes(payload) {
 	return { type: R.FILTER_CREATED, payload };
 }
+
+export function filteredByNames(payload) {
+	return { type: R.FILTERED_NAMES, payload };
+}
+
+export function filteredByScores(payload) {
+	return { type: R.FILTERED_SCORE, payload };
+}

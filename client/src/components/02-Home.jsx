@@ -2,7 +2,13 @@ import { React, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { getAllRecipes, filterByTypes, filterCreatedRecipes } from '../redux/actions';
+import {
+	getAllRecipes,
+	filterByTypes,
+	filterCreatedRecipes,
+	filteredByNames,
+	filteredByScores,
+} from '../redux/actions';
 import CardReceta from './03-CardReceta';
 import Paginado from './04-Paginado';
 
@@ -13,6 +19,9 @@ export default function Home() {
 	let [homePage, sethomePage] = useState(1);
 	// eslint-disable-next-line no-unused-vars
 	let [recipesPerPage, setrecipesPerPage] = useState(9);
+
+	// eslint-disable-next-line no-unused-vars
+	let [orden, setOrden] = useState('');
 
 	let lastRecipe = homePage * recipesPerPage;
 	let firstRecipe = lastRecipe - recipesPerPage;
@@ -39,6 +48,19 @@ export default function Home() {
 	function handleFilterCreated(e) {
 		dispatch(filterCreatedRecipes(e.target.value));
 	}
+	function handleFilterName(e) {
+		e.preventDefault();
+		dispatch(filteredByNames(e.target.value));
+		sethomePage(1);
+		setOrden(`Ordenado ${e.target.value}`);
+	}
+
+	function handleFilterScore(e) {
+		e.preventDefault();
+		dispatch(filteredByScores(e.target.value));
+		sethomePage(1);
+		setOrden(`Ordenado ${e.target.value}`);
+	}
 
 	return (
 		<>
@@ -57,17 +79,19 @@ export default function Home() {
 					<option value='paleo'> Paleo </option>
 				</select>
 				<select onChange={(e) => handleFilterCreated(e)}>
-					<option value='All'> Existentes y Creadas </option>
+					<option value='All'> Recetas </option>
 					<option value='created'> Creadas </option>
 					{/* <option value='api'> Existentes </option> */}
 				</select>
-				<select onChange={(e) => e}>
-					<option value='Nasc'>Nombre Ascendente</option>
-					<option value='Ndesc'>Nombre Descendente</option>
+				<select onChange={(e) => handleFilterName(e)}>
+					<option value='sin'> Ordenar Alfabeticamente </option>
+					<option value='asc'>Nombre Ascendente</option>
+					<option value='desc'>Nombre Descendente</option>
 				</select>
-				<select>
-					<option value='Pasc'>Puntuación Ascendente</option>
-					<option value='Pdesc'>Puntuación Descendente</option>
+				<select onChange={(e) => handleFilterScore(e)}>
+					<option value='sin'> Ordenar por HealthScore </option>
+					<option value='asc'>Puntuación Ascendente</option>
+					<option value='desc'>Puntuación Descendente</option>
 				</select>
 				<Paginado
 					recipesPerPage={recipesPerPage}

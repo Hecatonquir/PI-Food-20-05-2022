@@ -7,6 +7,8 @@ export const ALL_DIETS = 'ALL_DIETS';
 export const SET_DETAIL = 'SET_DETAIL';
 export const FILTER_TYPE = 'FILTER_TYPE';
 export const FILTER_CREATED = 'FILTER_CREATED';
+export const FILTERED_NAMES = 'FILTERED_NAMES';
+export const FILTERED_SCORE = 'FILTERED_SCORE';
 
 let index = 1;
 
@@ -70,6 +72,30 @@ function reducer(state = initialState, action) {
 			return {
 				...state,
 				recipes: statusFiltered2,
+			};
+		case FILTERED_NAMES:
+			const allRecipes3 = state.allRecipes;
+			const statusFiltered3 =
+				action.payload === 'sin'
+					? allRecipes3
+					: action.payload === 'asc'
+					? allRecipes3.sort((a, b) => (a.title > b.title ? 1 : -1))
+					: allRecipes3.sort((a, b) => (a.title > b.title ? -1 : 1));
+			return {
+				...state,
+				recipes: statusFiltered3,
+			};
+		case FILTERED_SCORE:
+			const allRecipes4 = state.allRecipes;
+			const statusFiltered4 =
+				action.payload === 'sin'
+					? allRecipes4
+					: action.payload === 'asc'
+					? allRecipes4.sort((a, b) => (a.healthScore > b.healthScore ? 1 : -1))
+					: allRecipes4.sort((a, b) => (a.healthScore > b.healthScore ? -1 : 1));
+			return {
+				...state,
+				recipes: statusFiltered4,
 			};
 		default:
 			return state;

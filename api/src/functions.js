@@ -1,6 +1,6 @@
 const axios = require('axios');
 const { Recipe, DietType } = require('./db.js');
-const Key = 'e38e3779809f4b03913a4172bfc2d236';
+const Key = '3a192ff1313647969f9a18cc3855f81b';
 /* 
 Key = '';
 Key = '';
@@ -136,7 +136,7 @@ const newRecipe = async function (req, res, next) {
 			where: { title: diets.map((e) => e.toLowerCase()) },
 		});
 		createdRecipes.addDietType(createdDiet);
-		res.send('createdRecipes');
+		res.send('Creaste una nueva receta');
 	} catch (error) {
 		//next(error);
 		res.send('No pusiste todos los datos para crear una receta nueva.');
@@ -146,31 +146,31 @@ const newRecipe = async function (req, res, next) {
 const loadDietTypes = async function (req, res, next) {
 	try {
 		const apiTypes = await getApiRecipes();
-		await apiTypes.map((obj) =>
-			obj.diets.map((e) => DietType.findOrCreate({ where: { title: e.toLowerCase() } }))
-		);
+		await apiTypes.map(async (obj) => {
+			return await obj.diets.map(async (e) => {
+				return await DietType.findOrCreate({ where: { title: e.toLowerCase() } });
+			});
+		});
 		const dbTypes = await DietType.findAll();
-		return res.send(dbTypes.map((e) => e.title));
+		const dbTypes2 = dbTypes.map((e) => e.dataValues.title);
+		return dbTypes2 && res.send('Datos guardados');
 	} catch (error) {
-		const dbTypes = await DietType.findAll();
-		return res.send(dbTypes.map((e) => e.title));
-		/* res.send('No hay datos guardados'); */
+		res.send('No hay datos guardados');
 	}
 };
 
 const upDietTypes = async function (req, res, next) {
 	let FoodTypes = [
-		{ title: 'Gluten Free' },
+		/* { title: 'Gluten Free' }, */
 		{ title: 'Ketogenic' },
-		{ title: 'Vegetarian' },
-		{ title: 'Lacto-Vegetarian' },
-		{ title: 'Ovo-Vegetarian' },
-		{ title: 'Vegan' },
-		{ title: 'Pescetarian' },
-		{ title: 'Paleo' },
+		/* { title: 'Vegetarian' }, */
+		/* { title: 'Lacto Ovo Vegetarian' }, */
+		/* { title: 'Vegan' }, */
+		{ title: 'Pescatarian' },
+		{ title: 'Paleolithic' },
 		{ title: 'Primal' },
-		{ title: 'Low ODMAP' },
-		{ title: 'Whole30' },
+		{ title: 'Fodmap Friendly' },
+		{ title: 'Whole 30' },
 	];
 	try {
 		FoodTypes.map((e) => DietType.findOrCreate({ where: { title: e.title.toLowerCase() } }));

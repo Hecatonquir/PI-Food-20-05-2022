@@ -32,18 +32,18 @@ export function createRecipe(info) {
 	return { type: R.NEW_RECIPE, payload: info };
 }
 
-/* export function createRecipe(info) {
-	return async (dispatch) => {
-		return axios('http://localhost:3001/recipe').then((res) =>
-			dispatch({ type: R.ALL_FOOD, payload: res.data })
-		);
-	};
-} */
-
 export function getDetail(id) {
 	return async function (dispatch) {
 		return fetch(`http://localhost:3001/recipes/${id}`)
 			.then((res) => res.json())
 			.then((post) => dispatch({ type: R.SET_DETAIL, payload: post }));
 	};
+}
+
+export function filterByTypes(payload) {
+	return { type: R.FILTER_TYPE, payload };
+}
+
+export function filterCreatedRecipes(payload) {
+	return { type: R.FILTER_CREATED, payload };
 }

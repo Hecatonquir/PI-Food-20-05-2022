@@ -2,8 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 export default function CardReceta({ id, title, image, diets, dietTypes }) {
-	console.log('------------------ ESTO ES diet ------------------------------');
-	console.log(diets);
+
 	return (
 		<div key={id}>
 			<img src={image} alt={title} />
@@ -12,7 +11,7 @@ export default function CardReceta({ id, title, image, diets, dietTypes }) {
 			<Link to={`/recipes/${id} `}> {title} </Link>
 			<div>
 				Diet Types:{' '}
-				{diets.length
+				{diets?.length
 					? diets[0].title
 						? diets.map((e) => e.title).join(' - ')
 						: diets.join(' - ')

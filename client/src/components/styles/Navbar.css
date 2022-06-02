@@ -1,0 +1,43 @@
+nav {
+	color: white;
+}
+ul {
+	display: block;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	margin: 0;
+	padding: 10px;
+	background-color: #619cac;
+}
+
+li {
+	display: inline;
+	padding: 8px;
+	border-right: 1px solid #bbb;
+}
+
+/* Change the link color to #111 (black) on hover */
+li :hover {
+	background-color: rgb(1, 119, 255);
+}
+
+.active {
+	background-color: #474747;
+	padding: 8px;
+	color: rgb(255, 0, 81);
+	font-size: larger;
+	font-weight: bolder;
+}
+.inActive {
+	background-color: #8000ff;
+	padding: 8px;
+	color: rgb(208, 255, 0);
+	font-size: larger;
+	font-weight: bolder;
+}
+
+/*  {
+	font-size: 20px;
+	color: green;
+} */

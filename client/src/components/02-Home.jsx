@@ -13,6 +13,7 @@ import {
 import CardReceta from './03-CardReceta';
 import Paginado from './04-Paginado';
 import SearchBar from './05-searchBar';
+import './styles/home.css';
 
 export default function Home() {
 	const dispatch = useDispatch();
@@ -75,7 +76,7 @@ export default function Home() {
 			<button onClick={(e) => handleClick(e)}> Volver a cargar todas las Recetas</button>
 			<div>
 				<select onChange={(e) => handleFilterTypes(e)}>
-					<option value='sin'> Tipos de dietas </option>
+					<option value='All'> Tipos de dietas </option>
 					{dietTypes.map((d) => {
 						return (
 							<option key={d.title} value={d.title}>
@@ -97,7 +98,6 @@ export default function Home() {
 				<select onChange={(e) => handleFilterCreated(e)}>
 					<option value='All'> Recetas </option>
 					<option value='created'> Creadas </option>
-					{/* <option value='api'> Existentes </option> */}
 				</select>
 				<br />
 				<Paginado
@@ -106,20 +106,23 @@ export default function Home() {
 					paginado={paginado}
 				/>
 				<br />
-
-				{currentRecipes?.map((e) => {
-					return (
-						<div key={e.id}>
-							<CardReceta
-								key={e.id}
-								id={e.id}
-								title={e.title}
-								image={e.image}
-								diets={e.diets ? e.diets : e.dietTypes}
-							/>
-						</div>
-					);
-				})}
+				<div class='wrapper'>
+					{currentRecipes?.map((e) => {
+						return (
+							<div key={e.id}>
+								<div>
+									<CardReceta
+										key={e.id}
+										id={e.id}
+										title={e.title}
+										image={e.image}
+										diets={e.diets ? e.diets : e.dietTypes}
+									/>
+								</div>
+							</div>
+						);
+					})}
+				</div>
 				<Paginado
 					recipesPerPage={recipesPerPage}
 					allRecipes={allRecipes.length}

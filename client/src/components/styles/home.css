@@ -1,0 +1,5 @@
+div.wrapper {
+	display: grid;
+	grid-template-rows: 540px 540px 540px;
+	grid-template-columns: 540px 540px 540px;
+}

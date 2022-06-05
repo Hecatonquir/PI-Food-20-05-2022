@@ -32,7 +32,7 @@ export default function DetalleRecetaCreada(props) {
 	const diets = foundRecipe[0]
 		? foundRecipe.find((e) => e.diets)?.diets
 		: foundRecipe.dietTypes?.map((e) => e.title).join(' - ');
-	console.log(diets);
+
 	return (
 		<div>
 			{foundRecipe ? (
@@ -40,7 +40,10 @@ export default function DetalleRecetaCreada(props) {
 					<img src={image} alt={title} />
 					<h4> {title} </h4>
 					<div className='DietTypes'>Tipos de dietas:{diets ? diets : 'No Encontré Dietas'}</div>
-					<h4>Resumen del plato: {summary} </h4>
+					<h4>
+						Resumen del plato: <div dangerouslySetInnerHTML={{ __html: summary }}></div>{' '}
+					</h4>
+
 					<h3>Puntuación: {aggregateLikes}</h3>
 					<h3>Health Score: {healthScore}</h3>
 					<h4>

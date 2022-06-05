@@ -9,8 +9,8 @@ export default function control(localInput) {
 	if (localInput.healthScore < 0 || localInput.healthScore > 100) {
 		verif.healthScore = 'La puntuación tiene que ser un número entre 0 y 100';
 	}
-	if (localInput.image.length > 255) {
-		verif.image = 'La url es demasiado grande! Elegí una imagen con menos de 255 caracteres.';
+	if (!localInput.image) {
+		verif.image = 'Insertá una imagen!!';
 	}
 	return verif;
 }

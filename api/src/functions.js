@@ -1,7 +1,7 @@
 const axios = require('axios');
 const { Recipe, DietType } = require('./db.js');
 
-const Key = '88cfca3e910f4d36bd5c1aa43a8b5cb5';
+const Key = 'a38d408c9619418480e5cb2b59049d44';
 /*  */
 // LLAMA LAS PRIMERAS 100 RECETAS DE LA API
 const getApiRecipes = async () => {

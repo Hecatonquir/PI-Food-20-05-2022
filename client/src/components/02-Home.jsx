@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import {
 	getAllRecipes,
+	getTypes,
 	filterByTypes,
 	filterCreatedRecipes,
 	filteredByNames,
@@ -11,18 +12,18 @@ import {
 } from '../redux/actions';
 import CardReceta from './03-CardReceta';
 import Paginado from './04-Paginado';
+import SearchBar from './05-searchBar';
 
 export default function Home() {
 	const dispatch = useDispatch();
-	const allRecipes = useSelector((state) => state.recipes); // esto es lo mismo que hacer el mapStateToProps
+	const allRecipes = useSelector((state) => state.recipes);
+	const dietTypes = useSelector((state) => state.types);
 	//------------------------------------ Paginado -----------------------------------
 	let [homePage, sethomePage] = useState(1);
 	// eslint-disable-next-line no-unused-vars
 	let [recipesPerPage, setrecipesPerPage] = useState(9);
-
 	// eslint-disable-next-line no-unused-vars
 	let [orden, setOrden] = useState('');
-
 	let lastRecipe = homePage * recipesPerPage;
 	let firstRecipe = lastRecipe - recipesPerPage;
 	let currentRecipes = allRecipes.slice(firstRecipe, lastRecipe);
@@ -34,7 +35,9 @@ export default function Home() {
 	//------------------------------------ Paginado -----------------------------------
 
 	useEffect(() => {
+		/* dispatch(()) */
 		dispatch(getAllRecipes());
+		dispatch(getTypes());
 	}, [dispatch]);
 
 	function handleClick(e) {
@@ -64,24 +67,22 @@ export default function Home() {
 
 	return (
 		<>
-			<Link to='/recipe'> Crear Receta</Link>
 			<h1>Estás En Home</h1>
+			<SearchBar />
+			<br />
+			<Link to='/recipe'> Crear Receta </Link>
+			<br />
 			<button onClick={(e) => handleClick(e)}> Volver a cargar todas las Recetas</button>
 			<div>
 				<select onChange={(e) => handleFilterTypes(e)}>
-					vegetarian, vegan, glutenFree
-					<option value='All'> Todos </option>
-					<option value='lacto ovo vegetarian'> Vegetariano </option>
-					<option value='vegan'> Vegano </option> {/* OK */}
-					<option value='dairy free'> Libre de Lactosa </option>
-					<option value='gluten free'> Apto para Celíacos </option>
-					<option value='whole 30'> Whole30 </option>
-					<option value='paleo'> Paleo </option>
-				</select>
-				<select onChange={(e) => handleFilterCreated(e)}>
-					<option value='All'> Recetas </option>
-					<option value='created'> Creadas </option>
-					{/* <option value='api'> Existentes </option> */}
+					<option value='sin'> Tipos de dietas </option>
+					{dietTypes.map((d) => {
+						return (
+							<option key={d.title} value={d.title}>
+								{d.title}
+							</option>
+						);
+					})}
 				</select>
 				<select onChange={(e) => handleFilterName(e)}>
 					<option value='sin'> Ordenar Alfabeticamente </option>
@@ -93,11 +94,18 @@ export default function Home() {
 					<option value='asc'>Puntuación Ascendente</option>
 					<option value='desc'>Puntuación Descendente</option>
 				</select>
+				<select onChange={(e) => handleFilterCreated(e)}>
+					<option value='All'> Recetas </option>
+					<option value='created'> Creadas </option>
+					{/* <option value='api'> Existentes </option> */}
+				</select>
+				<br />
 				<Paginado
 					recipesPerPage={recipesPerPage}
 					allRecipes={allRecipes.length}
 					paginado={paginado}
 				/>
+				<br />
 
 				{currentRecipes?.map((e) => {
 					return (
@@ -112,6 +120,11 @@ export default function Home() {
 						</div>
 					);
 				})}
+				<Paginado
+					recipesPerPage={recipesPerPage}
+					allRecipes={allRecipes.length}
+					paginado={paginado}
+				/>
 			</div>
 		</>
 	);

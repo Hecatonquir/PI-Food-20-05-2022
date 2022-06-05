@@ -1,0 +1,28 @@
+a {
+	margin: auto;
+	padding: 0.1rem;
+	background-color: rgba(70, 80, 99, 0.694);
+	color: #fbff02;
+	border-radius: 5%;
+	font-weight: bolder;
+}
+
+div.DietTypes {
+	margin: auto;
+	padding: 0.1rem;
+	background-color: rgba(255, 255, 255, 0.42);
+	color: #000000;
+	border-radius: 5%;
+	font-weight: bold;
+	border: 1px solid #2b2d32;
+	width: fit-content;
+}
+
+img {
+	max-width: 300px;
+	height: 300px;
+	/* display: block; */
+	margin-left: auto;
+	margin-right: auto;
+	width: 40%;
+}

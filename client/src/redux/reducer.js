@@ -1,22 +1,25 @@
 //import { application } from 'express';
 export const ALL_FOOD = 'ALL_FOOD';
+export const DB_RECIPES = 'DB_RECIPES';
 export const FOOD_NAME = 'FOOD_NAME';
 export const FOOD_ID = 'FOOD_ID';
 export const NEW_RECIPE = 'NEW_RECIPE';
-export const ALL_DIETS = 'ALL_DIETS';
+export const All_TYPES = 'All_TYPES';
 export const SET_DETAIL = 'SET_DETAIL';
 export const FILTER_TYPE = 'FILTER_TYPE';
 export const FILTER_CREATED = 'FILTER_CREATED';
 export const FILTERED_NAMES = 'FILTERED_NAMES';
 export const FILTERED_SCORE = 'FILTERED_SCORE';
+export const DELETED = 'DELETED';
 
-let index = 1;
+/* let index = 1; */
 
 const initialState = {
 	recipes: [],
 	allRecipes: [],
+	dbrecipes: [],
 	types: [],
-	detail: {},
+	detail: [],
 };
 
 function reducer(state = initialState, action) {
@@ -27,17 +30,26 @@ function reducer(state = initialState, action) {
 				recipes: action.payload,
 				allRecipes: action.payload,
 			};
+		case FOOD_ID:
+			return {
+				...state,
+				detail: action.payload,
+			};
 		case FOOD_NAME:
 			return {
 				...state,
 				recipes: action.payload,
 			};
+		case DB_RECIPES:
+			return {
+				...state,
+				dbrecipes: action.payload,
+			};
 		case NEW_RECIPE:
 			return {
 				...state,
-				recipes: [...state.recipes, { ...action.payload, id: index++ }],
 			};
-		case ALL_DIETS:
+		case All_TYPES:
 			return {
 				...state,
 				types: action.payload,
@@ -96,6 +108,11 @@ function reducer(state = initialState, action) {
 			return {
 				...state,
 				recipes: statusFiltered4,
+			};
+		case DELETED:
+			return {
+				...state,
+				dbrecipes: action.payload,
 			};
 		default:
 			return state;

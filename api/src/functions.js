@@ -1,14 +1,8 @@
 const axios = require('axios');
 const { Recipe, DietType } = require('./db.js');
-const Key = '3a192ff1313647969f9a18cc3855f81b';
-/* 
-Key = '';
-Key = '';
-Key = '';
-Key = '';
-Key = '';
-*/
 
+const Key = '88cfca3e910f4d36bd5c1aa43a8b5cb5';
+/*  */
 // LLAMA LAS PRIMERAS 100 RECETAS DE LA API
 const getApiRecipes = async () => {
 	try {
@@ -27,9 +21,9 @@ const getApiRecipes = async () => {
 				healthScore: e.healthScore,
 				// ESTO ES UN ARRAY CON UN OBJETO DENTRO, CON UNA KEY QUE ES UN ARRAY DONDE CADA ELEMENTO ES UN OBJETO
 				analyzedInstructions: e.analyzedInstructions[0]
-					? e.analyzedInstructions[0].steps.map((e) => ` ${e.number}º step: ${e.step}  `)
+					? e.analyzedInstructions[0].steps.map((e) => ` ${e.number}º step: ${e.step}  `).join()
 					: 'No hay pasos a seguir',
-				diets: e.diets.map((e) => e),
+				diets: e.diets,
 				image: e.image,
 			};
 		});
@@ -45,11 +39,8 @@ const getDbRecipes = async () => {
 		include: {
 			model: DietType,
 			attributes: ['title'],
-			through: { attributes: [] },
 		},
 	});
-
-	
 
 	return created_recipes;
 };
@@ -83,45 +74,40 @@ const getFoodByID = async (req, res, next) => {
 	let { idReceta } = req.params;
 
 	if (idReceta.includes('-')) {
-		const created_recipes = await Recipe.findAll();
+		const created_recipes = await Recipe.findAll({
+			include: [{ model: DietType }],
+		});
 		let found = created_recipes.find((e) => e.id == idReceta);
 		return res.send(found);
 	} else {
-		idReceta = parseInt(idReceta);
-		var IdFood = {};
-	}
+		try {
+			const apiFood = (
+				await axios.get(
+					`https://api.spoonacular.com/recipes/${idReceta}/information?apiKey=${Key}`
+				)
+			).data;
+			const apiFoodArray = Object.entries(apiFood);
 
-	try {
-		const apiFood = (
-			await axios.get(`https://api.spoonacular.com/recipes/${idReceta}/information?apiKey=${Key}`)
-		).data;
+			const idRecipe = apiFoodArray
+				.map((e) => {
+					if (e[0] == 'id') return { id: e[1] };
+					else if (e[0] == 'title') return { title: e[1] };
+					else if (e[0] == 'summary') return { summary: e[1] };
+					else if (e[0] == 'aggregateLikes') return { aggregateLikes: e[1] };
+					else if (e[0] == 'healthScore') return { healthScore: e[1] };
+					else if (e[0] == 'analyzedInstructions') return { analyzedInstructions: e[1] };
+					else if (e[0] == 'title') return { title: e[1] };
+					else if (e[0] == 'diets') return { diets: e[1] };
+					else if (e[0] == 'image') return { image: e[1] };
+				})
+				.filter((e) => e != null);
 
-		IdFood = {
-			id: apiFood.id,
-			title: apiFood.title,
-			summary: apiFood.summary,
-			aggregateLikes: apiFood.aggregateLikes,
-			healthScore: apiFood.healthScore,
-			// ESTO ES UN ARRAY CON UN OBJETO DENTRO, CON UNA KEY QUE ES UN ARRAY DONDE CADA ELEMENTO ES UN OBJETO
-			analyzedInstructions: apiFood.analyzedInstructions[0]
-				? apiFood.analyzedInstructions[0].steps
-						.map((e) => `  ${apiFood.number}º step: ${apiFood.step}`)
-						.join('\n')
-				: 'No se encontraron pasos a seguir',
-			diets: apiFood.diets.join('\n '),
-			image: apiFood.image,
-		};
-
-		res.send(IdFood);
-	} catch (error) {
-		//next(error)
-		res.send('No se encontraro una receta con ese ID.');
+			return res.send(idRecipe);
+		} catch (error) {
+			return error;
+		}
 	}
 };
-
-/*  GET /types:
-Obtener todos los tipos de dieta posibles
-En una primera instancia, cuando no exista ninguno, deberán precargar la base de datos con los tipos de datos indicados por spoonacular acá */
 
 const newRecipe = async function (req, res, next) {
 	try {
@@ -148,15 +134,18 @@ const newRecipe = async function (req, res, next) {
 
 const loadDietTypes = async function (req, res, next) {
 	try {
-		const apiTypes = await getApiRecipes();
-		await apiTypes.map(async (obj) => {
-			return await obj.diets.map(async (e) => {
-				return await DietType.findOrCreate({ where: { title: e.toLowerCase() } });
-			});
+		const apiRecipes = await getApiRecipes();
+		const dietas = apiRecipes.map((e) => e.diets).flat(Infinity);
+		/* este es un array con dietas repetidas */
+		let uniqueArray = [...new Set(dietas)];
+		/* este es un array con dietas UNICAS */
+		/* console.log(uniqueArray); */
+
+		uniqueArray.map((e) => {
+			DietType.findOrCreate({ where: { title: e } });
 		});
-		const dbTypes = await DietType.findAll();
-		const dbTypes2 = dbTypes.map((e) => e.dataValues.title);
-		return dbTypes2 && res.send('Datos guardados');
+		const dietasCompletas = await DietType.findAll();
+		res.send(dietasCompletas);
 	} catch (error) {
 		res.send('No hay datos guardados');
 	}
@@ -165,10 +154,11 @@ const loadDietTypes = async function (req, res, next) {
 const upDietTypes = async function (req, res, next) {
 	let FoodTypes = [
 		/* { title: 'Gluten Free' }, */
-		{ title: 'Ketogenic' },
-		/* { title: 'Vegetarian' }, */
 		/* { title: 'Lacto Ovo Vegetarian' }, */
 		/* { title: 'Vegan' }, */
+		/* { title: 'Dairy Free' }, */
+		/* LAS PRIMERAS 4 NO LAS CARGO POR QUE CREO QUE ESO ES LO QUE ME PIDE EL README */
+		{ title: 'Ketogenic' },
 		{ title: 'Pescatarian' },
 		{ title: 'Paleolithic' },
 		{ title: 'Primal' },
@@ -183,11 +173,22 @@ const upDietTypes = async function (req, res, next) {
 	}
 };
 
+const deleteRecipe = async (req, res) => {
+	let { idReceta } = req.params;
+	await Recipe.destroy({
+		where: { id: idReceta },
+	});
+	const newFood = await getDbRecipes();
+	res.send(newFood);
+};
+
 module.exports = {
+	deleteRecipe,
 	getFoodByName,
 	getFoodByID,
 	loadDietTypes,
 	newRecipe,
 	upDietTypes,
 	getAllRecipes,
+	getDbRecipes,
 };

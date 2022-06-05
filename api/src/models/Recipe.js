@@ -30,7 +30,7 @@ module.exports = (sequelize) => {
 				allownull: true,
 			},
 			analyzedInstructions: {
-				type: DataTypes.ARRAY(DataTypes.STRING),
+				type: DataTypes.TEXT,
 				allownull: true,
 			},
 			image: {

@@ -15,6 +15,9 @@ export default function RecetasCreadas(props) {
 
 	return (
 		<React.Fragment>
+			<h3>________________________________________</h3>
+			<h1>Estás Recetas Creadas</h1>
+			<h3>________________________________________</h3>
 			<div>
 				{dbRecipes?.map((e) => (
 					<div key={e.id}>

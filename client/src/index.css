@@ -4,10 +4,9 @@ body {
 		'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-
 	font-size: 20px;
-
 	background: url('https://img.freepik.com/free-photo/kitchen-cooking-background_107389-2345.jpg?w=2000');
+	background-position: center;
 	background-position: center center;
 	color: #ffffff;
 }

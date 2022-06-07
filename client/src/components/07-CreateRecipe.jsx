@@ -34,14 +34,6 @@ export default function NewRecipe() {
 			})
 		);
 	};
-	/* 	let handleCheck = (e) => {
-		if (e.target.checked) {
-			setLocalInput({
-				...localInput,
-				diets: e.tarteg.value,
-			});
-		}
-	}; */
 
 	let handleSelect = (e) => {
 		setLocalInput({
@@ -72,9 +64,10 @@ export default function NewRecipe() {
 
 	return (
 		<>
-			<h3>Estás Create recipe</h3>
 			<h3>________________________________________</h3>
-			<br /> {/* esto produce un salto de línea (break) */}
+			<h1>Estás Create recipe</h1>
+			<h3>________________________________________</h3>
+			<br />
 			<form onSubmit={(e) => handleSubmit(e)}>
 				<div>
 					<label>Nombre: </label>
@@ -113,7 +106,6 @@ export default function NewRecipe() {
 						value={localInput.healthScore}
 						onChange={(e) => handleInputChange(e)}
 					/>
-
 					{verif?.healthScore ? <p className='verif'>{verif.healthScore}</p> : null}
 				</div>
 				<div>
@@ -135,44 +127,9 @@ export default function NewRecipe() {
 					/>
 					{verif?.image ? <p className='verif'>{verif.image}</p> : null}
 				</div>
-
-				{/* <div>
-					<label>Tipos Dietas: </label>
-					<label>
-						<input
-							type='checkbox'
-							name='lacto ovo vegetarian'
-							value='lacto ovo vegetarian'
-							onChange={(e) => handleCheck(e)}
-						/>
-						Vegetariano{' '}
-					</label>
-					<label>
-						<input type='checkbox' name='vegan' value='vegan' onChange={(e) => handleCheck(e)} />
-						Vegano{' '}
-					</label>
-					<label>
-						<input
-							type='checkbox'
-							name='gluten free'
-							value='gluten free'
-							onChange={(e) => handleCheck(e)}
-						/>
-						Apto para Celíacos{' '}
-					</label>
-					<label>
-						<input
-							type='checkbox'
-							name='dairy free'
-							value='dairy free'
-							onChange={(e) => handleCheck(e)}
-						/>
-						Sin Lactosa{' '}
-					</label>
-				</div> */}
 				<label>Tipos Dietas: </label>
 				<select onChange={(e) => handleSelect(e)}>
-					{dietTypes.map((d) => {
+					{dietTypes?.map((d) => {
 						return (
 							<option key={d.title} value={d.title}>
 								{d.title}
@@ -184,7 +141,6 @@ export default function NewRecipe() {
 					<li>{localInput.diets?.map((e) => `${e}, `)}</li>
 				</ul>
 				<button type='submit'> CREAR </button>
-				{/* También podría haber usado un boton, pero dentro de un formulario este es mejor ya que guarda todo de una e indica el final del formulario */}
 			</form>
 		</>
 	);

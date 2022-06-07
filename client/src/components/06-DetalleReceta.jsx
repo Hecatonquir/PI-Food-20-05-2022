@@ -11,14 +11,18 @@ export default function DetalleRecetaCreada(props) {
 	}, [dispatch, id]);
 	const foundRecipe = useSelector((state) => state.detail);
 
-	const title = foundRecipe[0] ? foundRecipe.find((e) => e.title)?.title : foundRecipe.title;
 	const image = foundRecipe[0] ? foundRecipe.find((e) => e.image)?.image : foundRecipe.image;
+	const title = foundRecipe[0] ? foundRecipe.find((e) => e.title)?.title : foundRecipe.title;
+	const dishTypes = foundRecipe[0]
+		? foundRecipe.find((e) => e.dishTypes)?.dishTypes.join(' - ')
+		: foundRecipe.dishTypes;
+	const diets = foundRecipe[0]
+		? foundRecipe.find((e) => e.diets)?.diets.join(' - ')
+		: foundRecipe.dietTypes?.map((e) => e.title).join(' - ');
 	const summary = foundRecipe[0]
 		? foundRecipe.find((e) => e.summary)?.summary
 		: foundRecipe.summary;
-	const aggregateLikes = foundRecipe[0]
-		? foundRecipe.find((e) => e.aggregateLikes)?.aggregateLikes
-		: foundRecipe.aggregateLikes;
+
 	const healthScore = foundRecipe[0]
 		? foundRecipe.find((e) => e.healthScore)?.healthScore
 		: foundRecipe.healthScore;
@@ -29,22 +33,18 @@ export default function DetalleRecetaCreada(props) {
 				.flat(Infinity)
 				.join('\n\n')
 		: foundRecipe.analyzedInstructions;
-	const diets = foundRecipe[0]
-		? foundRecipe.find((e) => e.diets)?.diets
-		: foundRecipe.dietTypes?.map((e) => e.title).join(' - ');
 
 	return (
 		<div>
 			{foundRecipe ? (
 				<div key={id}>
 					<img src={image} alt={title} />
-					<h4> {title} </h4>
+					<h4>Nombre: {title} </h4>
+					<h3>Tipo de Plato: {dishTypes ? dishTypes : 'No se encontró el tipo de plato'}</h3>
 					<div className='DietTypes'>Tipos de dietas:{diets ? diets : 'No Encontré Dietas'}</div>
 					<h4>
 						Resumen del plato: <div dangerouslySetInnerHTML={{ __html: summary }}></div>{' '}
 					</h4>
-
-					<h3>Puntuación: {aggregateLikes}</h3>
 					<h3>Health Score: {healthScore}</h3>
 					<h4>
 						Paso a paso:{' '}

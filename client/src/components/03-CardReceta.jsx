@@ -5,13 +5,21 @@ import './styles/CardReceta.css';
 export default function CardReceta({ id, title, image, diets }) {
 	return (
 		<div key={id}>
-			<img src={image} alt={title} />
+			{image ? <img src={image} alt={title} /> : ''}
 			<br />
-			<Link to={`/recipes/${id} `}>{title}</Link>
+			{title ? (
+				<Link to={`/recipes/${id} `}>{title}</Link>
+			) : (
+				<h3>'No se encontraron Recetas en la api, seguro te quedaste sin Apikeys'</h3>
+			)}
 			<br />
 			<div className='DietTypes'>
-				Tipo de dieta:{' '}
-				{diets[0]?.title ? diets.map((e) => e.title).join(' - ') : diets.join(' - ')}
+				{diets ? 'Tipo de dieta: ' : null}
+				{diets
+					? diets[0]?.title
+						? diets.map((e) => e.title).join(' - ')
+						: diets.join(' - ')
+					: ''}
 			</div>
 			<br />
 			<br />

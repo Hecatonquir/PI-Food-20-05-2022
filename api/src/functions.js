@@ -93,7 +93,7 @@ const getFoodByID = async (req, res, next) => {
 					if (e[0] == 'id') return { id: e[1] };
 					else if (e[0] == 'title') return { title: e[1] };
 					else if (e[0] == 'summary') return { summary: e[1] };
-					else if (e[0] == 'aggregateLikes') return { aggregateLikes: e[1] };
+					else if (e[0] == 'dishTypes') return { dishTypes: e[1] };
 					else if (e[0] == 'healthScore') return { healthScore: e[1] };
 					else if (e[0] == 'analyzedInstructions') return { analyzedInstructions: e[1] };
 					else if (e[0] == 'title') return { title: e[1] };
@@ -147,7 +147,8 @@ const loadDietTypes = async function (req, res, next) {
 		const dietasCompletas = await DietType.findAll();
 		res.send(dietasCompletas);
 	} catch (error) {
-		res.send('No hay datos guardados');
+		const dietasDB = await DietType.findAll();
+		res.send(dietasDB);
 	}
 };
 

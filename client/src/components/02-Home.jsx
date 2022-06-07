@@ -68,7 +68,9 @@ export default function Home() {
 
 	return (
 		<>
+			<h3>________________________________________</h3>
 			<h1>Estás En Home</h1>
+			<h3>________________________________________</h3>
 			<SearchBar />
 			<br />
 			<Link to='/recipe'> Crear Receta </Link>
@@ -77,27 +79,29 @@ export default function Home() {
 			<div>
 				<select onChange={(e) => handleFilterTypes(e)}>
 					<option value='All'> Tipos de dietas </option>
-					{dietTypes.map((d) => {
-						return (
-							<option key={d.title} value={d.title}>
-								{d.title}
-							</option>
-						);
-					})}
+					{typeof dietTypes != 'string'
+						? dietTypes.map((d) => {
+								return (
+									<option key={d.title} value={d.title}>
+										{d.title}
+									</option>
+								);
+						  })
+						: dietTypes}
 				</select>
 				<select onChange={(e) => handleFilterName(e)}>
-					<option value='sin'> Ordenar Alfabeticamente </option>
+					<option value='sin'>Ordenar Alfabeticamente</option>
 					<option value='asc'>Nombre Ascendente</option>
 					<option value='desc'>Nombre Descendente</option>
 				</select>
 				<select onChange={(e) => handleFilterScore(e)}>
-					<option value='sin'> Ordenar por HealthScore </option>
+					<option value='sin'>Ordenar por HealthScore</option>
 					<option value='asc'>Puntuación Ascendente</option>
 					<option value='desc'>Puntuación Descendente</option>
 				</select>
 				<select onChange={(e) => handleFilterCreated(e)}>
-					<option value='All'> Recetas </option>
-					<option value='created'> Creadas </option>
+					<option value='All'>Recetas</option>
+					<option value='created'>Creadas</option>
 				</select>
 				<br />
 				<Paginado
@@ -106,22 +110,23 @@ export default function Home() {
 					paginado={paginado}
 				/>
 				<br />
-				<div class='wrapper'>
-					{currentRecipes?.map((e) => {
-						return (
-							<div key={e.id}>
-								<div>
-									<CardReceta
-										key={e.id}
-										id={e.id}
-										title={e.title}
-										image={e.image}
-										diets={e.diets ? e.diets : e.dietTypes}
-									/>
-								</div>
-							</div>
-						);
-					})}
+				{/* ------------- Mostrando Cartas de recetas -------------------- */}
+				<div className='wrapper'>
+					{typeof currentRecipes != 'string' ? (
+						currentRecipes.map((e) => {
+							return (
+								<CardReceta
+									key={e.id}
+									id={e.id}
+									title={e.title}
+									image={e.image}
+									diets={e.diets ? e.diets : e.dietTypes}
+								/>
+							);
+						})
+					) : (
+						<h4>No se encontraron recetas con ese nombre</h4>
+					)}
 				</div>
 				<Paginado
 					recipesPerPage={recipesPerPage}

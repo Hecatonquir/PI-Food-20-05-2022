@@ -4,10 +4,9 @@ import { Route } from 'react-router-dom';
 import Navbar from './components/00-Navbar';
 import LandingPage from './components/01-LandingPage';
 import Home from './components/02-Home';
-import NewRecipe from './components/07-newRecipe';
+import NewRecipe from './components/07-CreateRecipe';
 import DetalleRecetaCreada from './components/06-DetalleReceta';
 import RecetasCreadas from './components/08-mostrarRecetasCreadas';
-
 
 function App() {
 	return (

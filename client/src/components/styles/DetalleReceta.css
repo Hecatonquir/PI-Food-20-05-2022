@@ -2,9 +2,10 @@ h4 {
 	margin: auto;
 	padding: 0.1rem;
 	background-color: rgba(70, 80, 99, 0.694);
-	color: #b6e2ff;
+	color: lightblue;
 	border-radius: 5%;
-	width: 70%;
+	width: fit-content;
+	max-width: 70%;
 	font-weight: bolder;
 }
 
@@ -12,7 +13,7 @@ h3 {
 	margin: auto;
 	padding: 0.1rem;
 	background-color: rgba(55, 60, 70, 0.598);
-	color: #2be502;
+	color: lightblue;
 	border-radius: 5%;
 	font-weight: bolder;
 	width: fit-content;

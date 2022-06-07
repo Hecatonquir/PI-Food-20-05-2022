@@ -1,4 +1,3 @@
-//import { application } from 'express';
 export const ALL_FOOD = 'ALL_FOOD';
 export const DB_RECIPES = 'DB_RECIPES';
 export const FOOD_NAME = 'FOOD_NAME';
@@ -12,13 +11,12 @@ export const FILTERED_NAMES = 'FILTERED_NAMES';
 export const FILTERED_SCORE = 'FILTERED_SCORE';
 export const DELETED = 'DELETED';
 
-/* let index = 1; */
-
 const initialState = {
 	recipes: [],
 	allRecipes: [],
 	dbrecipes: [],
 	types: [],
+	dbtypes: [],
 	detail: [],
 };
 

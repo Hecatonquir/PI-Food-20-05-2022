@@ -4,7 +4,7 @@ import * as R from './reducer';
 export function getAllRecipes() {
 	return async (dispatch) => {
 		return await axios
-			.get('http://localhost:3001/allrecipes')
+			.get('/allrecipes')
 			.then((res) => dispatch({ type: R.ALL_FOOD, payload: res.data }))
 			.catch('Te quedaste sin apiKeys');
 	};
@@ -13,7 +13,7 @@ export function getAllRecipes() {
 export function getDBRecipes() {
 	return async (dispatch) => {
 		return await axios
-			.get('http://localhost:3001/dbrecipes')
+			.get('/dbrecipes')
 			.then((res) => dispatch({ type: R.DB_RECIPES, payload: res.data }))
 			.catch('Te quedaste sin apiKeys');
 	};
@@ -22,7 +22,7 @@ export function getDBRecipes() {
 export function getFoodByName(info) {
 	return async (dispatch) => {
 		return await axios
-			.get(`http://localhost:3001/recipes?name=${info}`)
+			.get(`/recipes?name=${info}`)
 			.then((res) => dispatch({ type: R.FOOD_NAME, payload: res.data }));
 	};
 }
@@ -30,7 +30,7 @@ export function getFoodByName(info) {
 export function getRecipeById(id) {
 	return async (dispatch) => {
 		try {
-			let dataid = await axios.get(`http://localhost:3001/recipes/${id}`);
+			let dataid = await axios.get(`/recipes/${id}`);
 			return dispatch({ type: R.FOOD_ID, payload: dataid.data });
 		} catch (error) {
 			console.log('Seguro te quedaste sin apiKeys');
@@ -41,7 +41,7 @@ export function getRecipeById(id) {
 export function getTypes() {
 	return async (dispatch) => {
 		return await axios
-			.get('http://localhost:3001/types')
+			.get('/types')
 			.then((res) => dispatch({ type: R.All_TYPES, payload: res.data }));
 	};
 }
@@ -50,7 +50,7 @@ export function createNewRecipe(info) {
 	return async () => {
 		return await axios({
 			method: 'post',
-			url: 'http://localhost:3001/recipe',
+			url: '/recipe',
 			data: info,
 		});
 	};
@@ -60,7 +60,7 @@ export function deleteDBRecipes(id) {
 	return async (dispatch) => {
 		return await axios({
 			method: 'delete',
-			url: `http://localhost:3001/recipes/${id}`,
+			url: `/recipes/${id}`,
 		}).then((res) => dispatch({ type: R.DELETED, payload: res.data }));
 	};
 }

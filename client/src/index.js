@@ -4,8 +4,15 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
-import store from './redux/store.js';   
+import store from './redux/store.js';
 import { BrowserRouter } from 'react-router-dom';
+
+/* ------------ Configurations for  Deploy ----------- */
+import axios from 'axios';
+import dotenv from 'dotenv';
+dotenv.config();
+axios.defaults.baseURL = process.env.REACT_APP_API || 'http://localhost:3001';
+/* ------------ End of Deploy config ---------------- */
 
 ReactDOM.render(
 	<Provider store={store}>
@@ -15,7 +22,6 @@ ReactDOM.render(
 	</Provider>,
 	document.getElementById('root')
 );
-
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

@@ -8,11 +8,11 @@ export default function SearchBar() {
 
 	let [searchInput, setSearchInput] = useState('');
 
-	let handleChange = (e) => {
+	const handleChange = (e) => {
 		setSearchInput(e.target.value);
 	};
 
-	let handleSearch = (e) => {
+	const handleSearch = (e) => {
 		e.preventDefault();
 		dispatch(getFoodByName(searchInput));
 		setSearchInput('');
@@ -20,11 +20,13 @@ export default function SearchBar() {
 
 	return (
 		<>
-			<input type='text' onChange={(e) => handleChange(e)} placeholder='Insertar nombre...' />
+			<input type='text' onChange={(e) => handleChange(e)} placeholder='Buscar Receta...' />
 			<br />
 			<button type='submit' onClick={(e) => handleSearch(e)}>
 				Buscar
 			</button>
+			<br />
+			<br />
 		</>
 	);
 }

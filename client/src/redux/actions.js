@@ -38,22 +38,6 @@ export function getRecipeById(id) {
 	};
 }
 
-export function filterByTypes(payload) {
-	return { type: R.FILTER_TYPE, payload };
-}
-
-export function filterCreatedRecipes(payload) {
-	return { type: R.FILTER_CREATED, payload };
-}
-
-export function filteredByNames(payload) {
-	return { type: R.FILTERED_NAMES, payload };
-}
-
-export function filteredByScores(payload) {
-	return { type: R.FILTERED_SCORE, payload };
-}
-
 export function getTypes() {
 	return async (dispatch) => {
 		return await axios
@@ -79,4 +63,20 @@ export function deleteDBRecipes(id) {
 			url: `http://localhost:3001/recipes/${id}`,
 		}).then((res) => dispatch({ type: R.DELETED, payload: res.data }));
 	};
+}
+
+export function filterByTypes(payload) {
+	return { type: R.FILTER_TYPE, payload };
+}
+
+export function filterCreatedRecipes(payload) {
+	return { type: R.FILTER_CREATED, payload };
+}
+
+export function filteredByNames(payload) {
+	return { type: R.FILTERED_NAMES, payload };
+}
+
+export function filteredByScores(payload) {
+	return { type: R.FILTERED_SCORE, payload };
 }

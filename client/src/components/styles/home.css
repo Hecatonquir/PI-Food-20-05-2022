@@ -2,6 +2,14 @@ div.wrapper {
 	display: grid;
 	grid-template-rows: 540px 540px 540px;
 	grid-template-columns: 540px 540px 540px;
+	border-radius: 10%;
+}
+
+h1 {
+	margin: auto;
+	color: burlywood;
+	background-color: rgba(54, 53, 53, 0.5);
+	width: max-content;
 }
 
 h4 {

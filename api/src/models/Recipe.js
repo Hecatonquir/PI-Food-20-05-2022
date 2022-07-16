@@ -21,8 +21,8 @@ module.exports = (sequelize) => {
 				type: DataTypes.TEXT,
 				allownull: false,
 			},
-			aggregateLikes: {
-				type: DataTypes.INTEGER,
+			dishTypes: {
+				type: DataTypes.STRING,
 				allownull: true,
 			},
 			healthScore: {

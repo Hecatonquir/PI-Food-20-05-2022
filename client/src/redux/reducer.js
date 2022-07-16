@@ -86,7 +86,7 @@ function reducer(state = initialState, action) {
 		case FILTERED_NAMES:
 			const allRecipes3 = state.allRecipes;
 			const statusFiltered3 =
-				action.payload === 'sin'
+				action.payload === 'All'
 					? allRecipes3
 					: action.payload === 'asc'
 					? allRecipes3.sort((a, b) => (a.title > b.title ? 1 : -1))
@@ -98,7 +98,7 @@ function reducer(state = initialState, action) {
 		case FILTERED_SCORE:
 			const allRecipes4 = state.allRecipes;
 			const statusFiltered4 =
-				action.payload === 'sin'
+				action.payload === 'All'
 					? allRecipes4
 					: action.payload === 'asc'
 					? allRecipes4.sort((a, b) => (a.healthScore > b.healthScore ? 1 : -1))

@@ -11,6 +11,8 @@ export default function DetalleRecetaCreada(props) {
 	}, [dispatch, id]);
 	const foundRecipe = useSelector((state) => state.detail);
 
+	console.log(foundRecipe);
+
 	const image = foundRecipe[0] ? foundRecipe.find((e) => e.image)?.image : foundRecipe.image;
 	const title = foundRecipe[0] ? foundRecipe.find((e) => e.title)?.title : foundRecipe.title;
 	const dishTypes = foundRecipe[0]
@@ -22,7 +24,6 @@ export default function DetalleRecetaCreada(props) {
 	const summary = foundRecipe[0]
 		? foundRecipe.find((e) => e.summary)?.summary
 		: foundRecipe.summary;
-
 	const healthScore = foundRecipe[0]
 		? foundRecipe.find((e) => e.healthScore)?.healthScore
 		: foundRecipe.healthScore;
@@ -38,10 +39,11 @@ export default function DetalleRecetaCreada(props) {
 		<div>
 			{foundRecipe ? (
 				<div key={id}>
+					<br />
 					<img src={image} alt={title} />
 					<h4>Nombre: {title} </h4>
 					<h3>Tipo de Plato: {dishTypes ? dishTypes : 'No se encontró el tipo de plato'}</h3>
-					<div className='DietTypes'>Tipos de dietas:{diets ? diets : 'No Encontré Dietas'}</div>
+					<div className='DietTypes'>Tipos de dietas: {diets ? diets : 'No Encontré Dietas'}</div>
 					<h4>
 						Resumen del plato: <div dangerouslySetInnerHTML={{ __html: summary }}></div>{' '}
 					</h4>

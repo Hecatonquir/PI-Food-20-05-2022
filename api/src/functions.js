@@ -1,34 +1,50 @@
 const axios = require('axios');
 const { Recipe, DietType } = require('./db.js');
 
-const Key = 'a38d408c9619418480e5cb2b59049d44';
-/*  */
+const Key = '70c9bcf2516740f595bc167977701171';
+/* 
+Key = e4712b8fa7034c41baa034b4b5a8b1b1
+Key = 01648a6df1a44520ba2c730c3d9d86e8
+Key = 2bdb071e19ab4feca7fd48fb46b43ad0
+Key = e4f9c20808184a2a9d132d3e99a215a9
+Key = 8e1f1e1f68ef4972adf7e4cae1b94679
+Key = de27fab1f133456ab6d7244641e248c2
+Key = 18ecac27e38a44d7b743caec3d127396
+Key = b75a93cddbcf4489b619d5200ff4ccb5
+Key = 3b3b33f541aa4e12bf95b321729838f1
+Key = 135b36e964174efcbcb2e0940e9289d0
+Key = 246259cb904445e2b62c129ee5593920
+Key = 49ceb22f73024b688594f94856e55462
+Key = 348145973d5a4cc4a8ab4b7997b107e1
+Key = b2bf140a182344608dd2b107d338bfb3
+Key = 146510bab96446eaab809387f32e9076
+*/
 // LLAMA LAS PRIMERAS 100 RECETAS DE LA API
-const getApiRecipes = async () => {
+const getApiRecipes = () => {
 	try {
-		const apiFood = (
-			await axios.get(
+		return axios
+			.get(
 				`https://api.spoonacular.com/recipes/complexSearch?offset=0&number=50&apiKey=${Key}&addRecipeInformation=true`
 			)
-		).data.results;
-
-		const dataFood = await apiFood.map((e) => {
-			return {
-				id: e.id,
-				title: e.title,
-				summary: e.summary,
-				aggregateLikes: e.aggregateLikes,
-				healthScore: e.healthScore,
-				// ESTO ES UN ARRAY CON UN OBJETO DENTRO, CON UNA KEY QUE ES UN ARRAY DONDE CADA ELEMENTO ES UN OBJETO
-				analyzedInstructions: e.analyzedInstructions[0]
-					? e.analyzedInstructions[0].steps.map((e) => ` ${e.number}º step: ${e.step}  `).join()
-					: 'No hay pasos a seguir',
-				diets: e.diets,
-				image: e.image,
-			};
-		});
-
-		return dataFood;
+			.then((res) => {
+				const data = res.data.results.map((e) => {
+					return {
+						id: e.id,
+						title: e.title,
+						summary: e.summary,
+						aggregateLikes: e.aggregateLikes,
+						healthScore: e.healthScore,
+						analyzedInstructions: e.analyzedInstructions[0]
+							? e.analyzedInstructions[0].steps
+									.map((e) => ` ${e.number}º step: ${e.step}  `)
+									.join()
+							: 'No hay pasos a seguir',
+						diets: e.diets,
+						image: e.image,
+					};
+				});
+				return data;
+			});
 	} catch (error) {
 		return error;
 	}
@@ -111,19 +127,21 @@ const getFoodByID = async (req, res, next) => {
 
 const newRecipe = async function (req, res, next) {
 	try {
-		let { title, summary, aggregateLikes, healthScore, analyzedInstructions, diets, image } =
-			req.body;
+		let { title, summary, dishTypes, healthScore, analyzedInstructions, diets, image } = req.body;
+		dishTypes = dishTypes.join(', ');
 		let createdRecipes = await Recipe.create({
 			title,
 			summary,
-			aggregateLikes,
+			dishTypes,
 			healthScore,
 			analyzedInstructions,
 			image,
 		});
+
 		let createdDiet = await DietType.findAll({
 			where: { title: diets.map((e) => e.toLowerCase()) },
 		});
+
 		createdRecipes.addDietType(createdDiet);
 		res.send('Creaste una nueva receta');
 	} catch (error) {

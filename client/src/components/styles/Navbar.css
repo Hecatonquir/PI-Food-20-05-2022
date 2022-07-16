@@ -11,6 +11,17 @@ ul {
 	top: -2.1%;
 	margin-left: -250px;
 }
+ul.checkbox {
+	position: relative;
+	width: 60%;
+	height: 150px;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	border: 3px solid #2b2d32;
+	background-color: #3f93ab;
+	margin-left: -30%;
+}
 
 ul.dietSelection {
 	position: relative;
@@ -18,7 +29,7 @@ ul.dietSelection {
 	padding: 10px;
 	border: 3px solid #2b2d32;
 	background-color: #3f93ab;
-	margin-left: -22%;
+	margin-left: -27%;
 }
 
 li {
@@ -34,19 +45,7 @@ li :hover {
 .active {
 	background-color: #474747;
 	padding: 8px;
-	color: rgb(255, 0, 81);
+	color: aquamarine;
 	font-size: larger;
 	font-weight: bolder;
 }
-.inActive {
-	background-color: #8000ff;
-	padding: 8px;
-	color: rgb(208, 255, 0);
-	font-size: larger;
-	font-weight: bolder;
-}
-
-/*  {
-	font-size: 20px;
-	color: green;
-} */

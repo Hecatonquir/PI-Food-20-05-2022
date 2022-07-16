@@ -13,7 +13,7 @@ export default function CardReceta({ id, title, image, diets }) {
 				<h3>'No se encontraron Recetas en la api, seguro te quedaste sin Apikeys'</h3>
 			)}
 			<br />
-			<div className='DietTypes'>
+			<div key={id} className='DietTypes'>
 				{diets ? 'Tipo de dieta: ' : null}
 				{diets
 					? diets[0]?.title
@@ -21,8 +21,6 @@ export default function CardReceta({ id, title, image, diets }) {
 						: diets.join(' - ')
 					: ''}
 			</div>
-			<br />
-			<br />
 		</div>
 	);
 }

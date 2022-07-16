@@ -6,13 +6,14 @@ export default function Paginado({ recipesPerPage, allRecipes, paginado }) {
 	for (let i = 1; i <= amountOfPages; i++) {
 		pageArr.push(i);
 	}
+	
 	return (
 		<React.Fragment>
 			<nav className='paginado'>
 				{pageArr?.map((n) => (
 					// eslint-disable-next-line jsx-a11y/anchor-is-valid
 					<a className='pageNum' key={n}>
-						<button onClick={() => paginado(n)}>{n}</button>
+						<button key={n} onClick={() => paginado(n)}>{n}</button>
 					</a>
 				))}
 			</nav>

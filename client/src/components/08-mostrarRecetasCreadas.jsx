@@ -2,6 +2,8 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Receta from './03-CardReceta';
 import { getDBRecipes, deleteDBRecipes } from '../redux/actions';
+import { MainDiv } from './styles/MainDiv.styled';
+import Navbar from './00-Navbar';
 
 export default function RecetasCreadas(props) {
 	const dispatch = useDispatch();
@@ -14,11 +16,11 @@ export default function RecetasCreadas(props) {
 	}, [dispatch]);
 
 	return (
-		<React.Fragment>
-			<br />
-			<h3>________________________________________</h3>
-			<h1>Estas son las Recetas Creadas:</h1>
-			<h3>________________________________________</h3>
+		<MainDiv>
+			<Navbar />
+
+			<h1>These are the created Recipes:</h1>
+
 			<div>
 				{dbRecipes?.map((e) => (
 					<div key={e.id}>
@@ -39,6 +41,6 @@ export default function RecetasCreadas(props) {
 					</div>
 				))}
 			</div>
-		</React.Fragment>
+		</MainDiv>
 	);
 }

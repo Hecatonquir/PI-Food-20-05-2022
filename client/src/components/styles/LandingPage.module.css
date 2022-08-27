@@ -1,0 +1,23 @@
+.Landing {
+	background-color: var(--black-color);
+	padding: 2rem;
+}
+.Landing h1 {
+	color: var(--gold-color);
+	font-family: var(--font-base);
+	font-size: 100px;
+	text-shadow: 4px 4px 4px rgb(111, 111, 111);
+}
+.Landing button {
+	padding: 1rem;
+	background-color: var(--light-grey-color);
+	color: var(--bronce-color);
+	font-size: 50px;
+	text-shadow: 4px 4px 4px rgb(111, 111, 111);
+	border-radius: 5px;
+}
+.Landing button:hover {
+	background-color: var(--grey-color);
+	color: var(--gold-color);
+	border-radius: 5px;
+}

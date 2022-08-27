@@ -18,7 +18,9 @@ export function ByTypes() {
 
 	return (
 		<select onChange={(e) => handleFilterTypes(e)}>
-			<option value='All'> Tipos de dietas </option>
+			<option value='All' hidden>
+				Search By Diet
+			</option>
 			{typeof dietTypes != 'string'
 				? dietTypes.map((d) => {
 						return (
@@ -41,8 +43,11 @@ export function Created() {
 
 	return (
 		<select onChange={(e) => handleFilterCreated(e)}>
-			<option value='All'>Recetas</option>
-			<option value='created'>Creadas</option>
+			<option value='All' hidden>
+				Original VS Created
+			</option>
+			<option value='original'>Original</option>
+			<option value='created'>Created</option>
 		</select>
 	);
 }
@@ -60,9 +65,11 @@ export function ByAlphabet(todo) {
 
 	return (
 		<select onChange={(e) => handleFilterByAlphabet(e)}>
-			<option value='All'>Ordenar Alfabeticamente</option>
-			<option value='asc'>Nombre Ascendente</option>
-			<option value='desc'>Nombre Descendente</option>
+			<option value='All' hidden>
+				Order Alphabetically
+			</option>
+			<option value='asc'>A-Z</option>
+			<option value='desc'>Z-A</option>
 		</select>
 	);
 }
@@ -80,9 +87,11 @@ export function ByScore(todo) {
 
 	return (
 		<select onChange={(e) => handleFilterByScore(e)}>
-			<option value='All'>Ordenar por HealthScore</option>
-			<option value='asc'>Puntuación Ascendente</option>
-			<option value='desc'>Puntuación Descendente</option>
+			<option value='All' hidden>
+				HealthScore
+			</option>
+			<option value='desc'>Higher</option>
+			<option value='asc'>Lower</option>
 		</select>
 	);
 }

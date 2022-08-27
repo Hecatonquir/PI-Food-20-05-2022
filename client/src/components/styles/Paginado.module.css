@@ -1,0 +1,35 @@
+.Main {
+	margin: 1rem;
+	padding: 0.5rem;
+	background-image: url('https://cdn.pixabay.com/photo/2017/06/13/13/51/marble-2398946_1280.jpg');
+	color: var(--brown-color);
+	border-radius: 5px;
+	font-weight: bolder;
+}
+
+.Main button {
+	background-color: var(--light-grey-color);
+	color: var(--bronce-color);
+	font-weight: bolder;
+	border-radius: 5px;
+	margin: 0.1rem;
+}
+
+.Main :hover {
+	background-color: var(--grey-color);
+	color: var(--gold-color);
+}
+button.active {
+	background-color: var(--black-color);
+	color: var(--gold-color);
+}
+
+/* .Main button[class='active'] {
+	background-color: var(--light-grey-color);
+	padding: 0.5rem;
+	color: var(--bronce-color);
+	font-size: larger;
+	font-weight: bolder;
+}
+ */
+/* */

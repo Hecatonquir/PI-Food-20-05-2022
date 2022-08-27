@@ -1,13 +1,16 @@
 import { React, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 
 import { getAllRecipes, getTypes } from '../redux/actions';
 import CardReceta from './03-CardReceta';
 import Paginado from './04-Paginado';
 import SearchBar from './05-searchBar';
 import * as Filter from './Filtros';
-import './styles/home.css';
+import Navbar from './00-Navbar';
+
+import { MainDiv } from './styles/MainDiv.styled'; // STYLED COMPONENT
+import HomeCss from './styles/Home.module.css';
 
 export default function Home() {
 	const dispatch = useDispatch();
@@ -22,6 +25,7 @@ export default function Home() {
 	let lastRecipe = homePage * recipesPerPage;
 	let firstRecipe = lastRecipe - recipesPerPage;
 	let currentRecipes = allRecipes.slice(firstRecipe, lastRecipe);
+	console.log('🟢🟢🟢 / file: 02-Home.jsx / line 28 / Home / currentRecipes', currentRecipes);
 	const paginado = (pagenum) => {
 		sethomePage(pagenum);
 	};
@@ -33,16 +37,10 @@ export default function Home() {
 	}, [dispatch]);
 
 	return (
-		<>
-			<br />
-			<h3>________________________________________</h3>
-			<h1> Home </h1>
-			<h3>________________________________________</h3>
-			<SearchBar />
-			<Link to='/recipe'> Crear Receta </Link>
-			<br />
-			<br />
-			<div>
+		<MainDiv>
+			<Navbar />
+			<div className={`${HomeCss.Header}`}>
+				<SearchBar />
 				<Filter.ByTypes />
 				<Filter.ByAlphabet sethomePage={sethomePage} setOrden={setOrden} />
 				<Filter.ByScore sethomePage={sethomePage} setOrden={setOrden} />
@@ -52,35 +50,39 @@ export default function Home() {
 				recipesPerPage={recipesPerPage}
 				allRecipes={allRecipes.length}
 				paginado={paginado}
+				actualPage={homePage}
 			/>
-			<br />
-			{console.log(currentRecipes)}
+
 			{currentRecipes.length ? (
-				<div className='wrapper'>
-					{currentRecipes.map((e) => {
-						return (
-							<CardReceta
-								key={e.id}
-								id={e.id}
-								title={e.title}
-								image={e.image}
-								diets={e.diets ? e.diets : e.dietTypes}
-							/>
-						);
-					})}
-				</div>
+				typeof currentRecipes !== 'string' ? (
+					<div className={`${HomeCss.Cards}`}>
+						{currentRecipes.map((e) => {
+							return (
+								<CardReceta
+									key={e.id}
+									id={e.id}
+									title={e.title}
+									image={e.image}
+									diets={e.diets ? e.diets : e.dietsAPI}
+									dish={e.dishTypes}
+									cuisines={e.cuisines}
+									healthScore={e.healthScore}
+								/>
+							);
+						})}
+					</div>
+				) : (
+					<h1>No recipes Found</h1>
+				)
 			) : (
-				<h1>
-					No se encontraron recetas con ese nombre
-					<br />
-				</h1>
+				<h1>Loading...</h1>
 			)}
 			<Paginado
 				recipesPerPage={recipesPerPage}
 				allRecipes={allRecipes.length}
 				paginado={paginado}
+				actualPage={homePage}
 			/>
-			<br />
-		</>
+		</MainDiv>
 	);
 }

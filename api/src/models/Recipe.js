@@ -15,27 +15,33 @@ module.exports = (sequelize) => {
 			},
 			title: {
 				type: DataTypes.STRING,
-				allownull: false,
 			},
 			summary: {
 				type: DataTypes.TEXT,
-				allownull: false,
-			},
-			dishTypes: {
-				type: DataTypes.STRING,
-				allownull: true,
-			},
-			healthScore: {
-				type: DataTypes.INTEGER,
-				allownull: true,
 			},
 			analyzedInstructions: {
 				type: DataTypes.TEXT,
-				allownull: true,
 			},
 			image: {
 				type: DataTypes.TEXT,
-				allownull: true,
+			},
+			dishTypes: {
+				type: DataTypes.STRING,
+			},
+			healthScore: {
+				type: DataTypes.INTEGER,
+			},
+			idAPI: {
+				type: DataTypes.INTEGER,
+			},
+			aggregateLikes: {
+				type: DataTypes.INTEGER,
+			},
+			dietsAPI: {
+				type: DataTypes.ARRAY(DataTypes.STRING),
+			},
+			cuisines: {
+				type: DataTypes.ARRAY(DataTypes.STRING),
 			},
 		},
 		{ timestamps: false }

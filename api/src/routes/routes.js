@@ -17,14 +17,7 @@ routes.get('/recipes/:idReceta', getFoodByID);
 routes.get('/types', loadDietTypes);
 routes.post('/recipe', newRecipe);
 
-routes.get('/allrecipes', async (req, res, next) => {
-	let allRecipes = await getAllRecipes();
-	res.send(allRecipes);
-});
-routes.get('/dbrecipes', async (req, res) => {
-	let dbRecipes = await getDbRecipes();
-	res.send(dbRecipes);
-});
+routes.get('/allrecipes', getAllRecipes);
 
 routes.delete('/recipes/:idReceta', deleteRecipe);
 

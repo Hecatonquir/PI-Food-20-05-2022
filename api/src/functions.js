@@ -1,9 +1,8 @@
 const axios = require('axios');
 const { Recipe, DietType } = require('./db.js');
 
-const Key = '70c9bcf2516740f595bc167977701171';
+const Key = 'e4712b8fa7034c41baa034b4b5a8b1b1';
 /* 
-Key = e4712b8fa7034c41baa034b4b5a8b1b1
 Key = 01648a6df1a44520ba2c730c3d9d86e8
 Key = 2bdb071e19ab4feca7fd48fb46b43ad0
 Key = e4f9c20808184a2a9d132d3e99a215a9
@@ -24,29 +23,65 @@ const getApiRecipes = () => {
 	try {
 		return axios
 			.get(
-				`https://api.spoonacular.com/recipes/complexSearch?offset=0&number=50&apiKey=${Key}&addRecipeInformation=true`
+				`https://api.spoonacular.com/recipes/complexSearch?offset=0&number=30&apiKey=${Key}&addRecipeInformation=true`
 			)
-			.then((res) => {
-				const data = res.data.results.map((e) => {
+			.then(async (res) => {
+				const apiRecipes = res.data.results.map((e) => {
 					return {
-						id: e.id,
 						title: e.title,
 						summary: e.summary,
-						aggregateLikes: e.aggregateLikes,
 						healthScore: e.healthScore,
 						analyzedInstructions: e.analyzedInstructions[0]
-							? e.analyzedInstructions[0].steps
-									.map((e) => ` ${e.number}º step: ${e.step}  `)
-									.join()
+							? e.analyzedInstructions[0].steps.map((e) => ` ${e.number}º step: ${e.step}  `).join()
 							: 'No hay pasos a seguir',
-						diets: e.diets,
 						image: e.image,
+						dishTypes: e.dishTypes.join(', '),
+						idAPI: e.id,
+						aggregateLikes: e.aggregateLikes,
+						dietsAPI: e.diets,
+						cuisines: e.cuisines,
 					};
 				});
-				return data;
+
+				//console.log('🟢 apiRecipes:', apiRecipes[0]);
+				await apiRecipes.map(async (recipe) => {
+					await Recipe.findOrCreate({
+						where: recipe,
+					});
+				});
+
+				console.log('🟢🟢🟢 Cargaste las recetas de la API');
+				return true;
 			});
 	} catch (error) {
-		return error;
+		console.log('💥💥💥 / file: functions.js / line 58 / getApiRecipes / error', error.message);
+
+		return error.message;
+	}
+};
+
+const upDietTypes = async function (req, res, next) {
+	let FoodTypes = [
+		{ title: 'Gluten Free' },
+		{ title: 'Lacto Ovo Vegetarian' },
+		{ title: 'Vegan' },
+		{ title: 'Dairy Free' },
+		/*LAS PRIMERAS 4 NO LAS CARGO POR QUE CREO QUE ESO ES LO QUE ME PIDE EL README */
+		{ title: 'Ketogenic' },
+		{ title: 'Pescatarian' },
+		{ title: 'Paleolithic' },
+		{ title: 'Primal' },
+		{ title: 'Fodmap Friendly' },
+		{ title: 'Whole 30' },
+	];
+	try {
+		FoodTypes.map((e) => DietType.findOrCreate({ where: { title: e.title.toLowerCase() } }));
+		console.log('🟢 Tipos de dietas cargados a la DB');
+		return;
+	} catch (error) {
+		console.log('No se guardaron los Tipos de dietas en la DB');
+		console.log('💥💥💥 / file: functions.js / line 58 / getApiRecipes / error', error.message);
+		return;
 	}
 };
 
@@ -61,24 +96,25 @@ const getDbRecipes = async () => {
 	return created_recipes;
 };
 
-const getAllRecipes = async () => {
+const getAllRecipes = async (req, res) => {
 	try {
-		let apiRecipes = await getApiRecipes();
+		//let apiRecipes = await getApiRecipes();
 		let dbRecipes = await getDbRecipes();
-		let allRecipes = await dbRecipes.concat(apiRecipes);
-		return allRecipes;
+		//console.log('🟢🟢🟢 / file: functions.js / line 70 / getAllRecipes / dbRecipes', dbRecipes);
+		//let allRecipes = await dbRecipes.concat(apiRecipes);
+		console.log('🟢🟢🟢  ALLrecipes loaded correctly from DB');
+		res.send(dbRecipes);
 	} catch (error) {
-		return error;
+		console.log('💥💥💥 error', error.message);
+		res.send(error.message);
 	}
 };
 
 const getFoodByName = async (req, res, next) => {
 	let { name } = req.query;
-	let allRecipes = await getAllRecipes();
+	let allRecipes = await getDbRecipes();
 	try {
-		let MatchingFood = allRecipes.filter((e) =>
-			e.title.toLowerCase().includes(name.toLowerCase())
-		);
+		let MatchingFood = allRecipes.filter((e) => e.title.toLowerCase().includes(name.toLowerCase()));
 		res.send(MatchingFood);
 	} catch (error) {
 		//next(error); Esto sería usar el error centralizado
@@ -98,9 +134,7 @@ const getFoodByID = async (req, res, next) => {
 	} else {
 		try {
 			const apiFood = (
-				await axios.get(
-					`https://api.spoonacular.com/recipes/${idReceta}/information?apiKey=${Key}`
-				)
+				await axios.get(`https://api.spoonacular.com/recipes/${idReceta}/information?apiKey=${Key}`)
 			).data;
 			const apiFoodArray = Object.entries(apiFood);
 
@@ -129,6 +163,7 @@ const newRecipe = async function (req, res, next) {
 	try {
 		let { title, summary, dishTypes, healthScore, analyzedInstructions, diets, image } = req.body;
 		dishTypes = dishTypes.join(', ');
+
 		let createdRecipes = await Recipe.create({
 			title,
 			summary,
@@ -143,6 +178,7 @@ const newRecipe = async function (req, res, next) {
 		});
 
 		createdRecipes.addDietType(createdDiet);
+
 		res.send('Creaste una nueva receta');
 	} catch (error) {
 		//next(error);
@@ -152,8 +188,8 @@ const newRecipe = async function (req, res, next) {
 
 const loadDietTypes = async function (req, res, next) {
 	try {
-		const apiRecipes = await getApiRecipes();
-		const dietas = apiRecipes.map((e) => e.diets).flat(Infinity);
+		const Recipes = await getDbRecipes();
+		const dietas = Recipes.map((e) => e.dietsAPI).flat(Infinity);
 		/* este es un array con dietas repetidas */
 		let uniqueArray = [...new Set(dietas)];
 		/* este es un array con dietas UNICAS */
@@ -167,28 +203,6 @@ const loadDietTypes = async function (req, res, next) {
 	} catch (error) {
 		const dietasDB = await DietType.findAll();
 		res.send(dietasDB);
-	}
-};
-
-const upDietTypes = async function (req, res, next) {
-	let FoodTypes = [
-		/* { title: 'Gluten Free' }, */
-		/* { title: 'Lacto Ovo Vegetarian' }, */
-		/* { title: 'Vegan' }, */
-		/* { title: 'Dairy Free' }, */
-		/* LAS PRIMERAS 4 NO LAS CARGO POR QUE CREO QUE ESO ES LO QUE ME PIDE EL README */
-		{ title: 'Ketogenic' },
-		{ title: 'Pescatarian' },
-		{ title: 'Paleolithic' },
-		{ title: 'Primal' },
-		{ title: 'Fodmap Friendly' },
-		{ title: 'Whole 30' },
-	];
-	try {
-		FoodTypes.map((e) => DietType.findOrCreate({ where: { title: e.title.toLowerCase() } }));
-		res.send('Tipos cargados a la DB');
-	} catch (error) {
-		return 'No se guardaron los Tipos en la DB';
 	}
 };
 
@@ -210,4 +224,5 @@ module.exports = {
 	upDietTypes,
 	getAllRecipes,
 	getDbRecipes,
+	getApiRecipes,
 };

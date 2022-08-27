@@ -1,0 +1,40 @@
+.Main {
+	width: max-content;
+	border: 3px solid var(--bronce-color);
+	background-color: var(--black-color);
+	margin-bottom: 1rem;
+}
+
+.Main ul {
+	display: flex;
+	padding-left: 0%;
+}
+
+.Main a {
+	padding: 0.5rem;
+	font-weight: bolder;
+	color: var(--bronce-color);
+
+	text-decoration: none;
+}
+
+.Main li {
+	display: inline;
+	padding: 1rem;
+}
+
+.Main a[class='active'] {
+	background-color: var(--light-grey-color);
+	padding: 0.5rem;
+	color: var(--bronce-color);
+	font-size: larger;
+	font-weight: bolder;
+}
+
+.Main li :hover {
+	background-color: var(--grey-color);
+	padding: 0.5rem;
+	color: var(--gold-color);
+	/* font-size: larger; */
+	font-weight: bolder;
+}

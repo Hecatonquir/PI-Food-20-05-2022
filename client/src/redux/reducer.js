@@ -66,8 +66,8 @@ function reducer(state = initialState, action) {
 							e.diets
 								? e.diets.includes(action.payload)
 								: e.dietTypes
-								? e.dietTypes.map((e) => e.title.includes(action.payload)).includes(true)
-								: null
+								? e.dietsAPI.includes(action.payload)
+								: 'No Matches Found!'
 					  );
 			return {
 				...state,
@@ -76,9 +76,9 @@ function reducer(state = initialState, action) {
 		case FILTER_CREATED:
 			const allRecipes2 = state.allRecipes;
 			const statusFiltered2 =
-				action.payload === 'All'
-					? allRecipes2
-					: allRecipes2.filter((e) => typeof e.id === 'string');
+				action.payload === 'original'
+					? allRecipes2.filter((e) => e.idAPI)
+					: allRecipes2.filter((e) => !e.idAPI);
 			return {
 				...state,
 				recipes: statusFiltered2,

@@ -19,14 +19,11 @@ export default function SearchBar() {
 	};
 
 	return (
-		<>
-			<input type='text' onChange={(e) => handleChange(e)} placeholder='Buscar Receta...' />
-			<br />
+		<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+			<input type='text' onChange={(e) => handleChange(e)} placeholder='Search By Name' />
 			<button type='submit' onClick={(e) => handleSearch(e)}>
-				Buscar
+				Search
 			</button>
-			<br />
-			<br />
-		</>
+		</div>
 	);
 }

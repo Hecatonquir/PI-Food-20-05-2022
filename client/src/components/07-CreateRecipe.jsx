@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createNewRecipe, getTypes } from '../redux/actions';
 import control from './09-control.jsx';
 import './styles/CreateRecipe.css';
+import Navbar from './00-Navbar';
+import { MainDiv } from './styles/MainDiv.styled';
 
 export default function NewRecipe() {
 	const dispatch = useDispatch();
@@ -101,12 +103,9 @@ export default function NewRecipe() {
 	};
 
 	return (
-		<>
-			<br />
-			<h3>________________________________________</h3>
-			<h1> ¡Crea tu propia Receta! </h1>
-			<h3>________________________________________</h3>
-			<br />
+		<MainDiv>
+			<Navbar />
+			<h1> Create Your Own Recipe! </h1>
 			<form onSubmit={(e) => handleSubmit(e)}>
 				<div className='wraper'>
 					<div>
@@ -148,9 +147,7 @@ export default function NewRecipe() {
 							onChange={(e) => handleInputChange(e)}
 						/>
 					</div>
-					{verif?.analyzedInstructions ? (
-						<p className='verif'>{verif.analyzedInstructions}</p>
-					) : null}
+					{verif?.analyzedInstructions ? <p className='verif'>{verif.analyzedInstructions}</p> : null}
 					<div>
 						<label>Image: </label>
 						<input
@@ -173,9 +170,7 @@ export default function NewRecipe() {
 							})}
 						</select>
 						<ul className='dietSelection'>
-							<li>
-								{localInput.dishTypes.length ? localInput.dishTypes.map((e) => `${e}, `) : ''}
-							</li>
+							<li>{localInput.dishTypes.length ? localInput.dishTypes.map((e) => `${e}, `) : ''}</li>
 						</ul>
 					</div>
 					<div>
@@ -202,6 +197,6 @@ export default function NewRecipe() {
 				</div>
 				<button type='submit'> CREAR </button>
 			</form>
-		</>
+		</MainDiv>
 	);
 }

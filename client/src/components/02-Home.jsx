@@ -63,7 +63,8 @@ export default function Home() {
 									id={e.id}
 									title={e.title}
 									image={e.image}
-									diets={e.diets ? e.diets : e.dietsAPI}
+									diets={e.dietTypes}
+									dietsAPI={e.dietsAPI}
 									dish={e.dishTypes}
 									cuisines={e.cuisines}
 									healthScore={e.healthScore}

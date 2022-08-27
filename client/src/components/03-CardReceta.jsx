@@ -2,17 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import CardCSS from './styles/CardReceta.module.css';
 
-export default function CardReceta({ id, title, image, diets, dish, cuisines, healthScore }) {
+export default function CardReceta({ id, title, image, diets, dietsAPI, dish, cuisines, healthScore }) {
 	return (
 		<div key={id} className={CardCSS.Main}>
 			<div className={CardCSS.img__wrap}>
 				<img src={image} alt={title} className={CardCSS.img__img} />
 				<div className={CardCSS.img__description}>
-					<h3>Diets: {diets.join(', ')}</h3>
+					<h3>Diets: {dietsAPI ? dietsAPI.join(', ') : diets.map((diet) => diet.title).join(', ')}</h3>
 					<br />
 					<h3>Dish: {dish}</h3>
 					<br />
-					<h3>Cuisine: {cuisines.length ? cuisines.join(', ') : 'Global'}</h3>
+					<h3>Cuisine: {cuisines?.length ? cuisines.join(', ') : 'Global'}</h3>
 					{/* <br />
 					<h3>{healthScore}</h3> */}
 				</div>

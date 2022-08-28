@@ -34,9 +34,11 @@ function reducer(state = initialState, action) {
 				detail: action.payload,
 			};
 		case FOOD_NAME:
+			let found = action.payload;
+
 			return {
 				...state,
-				recipes: action.payload,
+				recipes: found.length ? found : "Couldn't Find Recipes With That Name",
 			};
 		case DB_RECIPES:
 			return {

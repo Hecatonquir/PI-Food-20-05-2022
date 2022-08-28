@@ -37,53 +37,68 @@ export default function Home() {
 	}, [dispatch]);
 
 	return (
-		<MainDiv>
-			<Navbar />
-			<div className={`${HomeCss.Header}`}>
-				<SearchBar />
-				<Filter.ByTypes />
-				<Filter.ByAlphabet sethomePage={sethomePage} setOrden={setOrden} />
-				<Filter.ByScore sethomePage={sethomePage} setOrden={setOrden} />
-				<Filter.Created />
-			</div>
-			<Paginado
-				recipesPerPage={recipesPerPage}
-				allRecipes={allRecipes.length}
-				paginado={paginado}
-				actualPage={homePage}
-			/>
+		<div>
+			<MainDiv>
+				<Navbar />
+				<div className={`${HomeCss.Intro}`}>
+					<h1> Welcome to Food App! </h1>
+					<img
+						src='https://img.freepik.com/vector-premium/logotipo-diseno-alimentos-calidad-catering_187482-593.jpg?w=2000'
+						alt='logo'
+					/>
+				</div>
+				<div className={`${HomeCss.Header}`}>
+					<SearchBar />
+					<Filter.ByTypes />
+					<Filter.ByAlphabet sethomePage={sethomePage} setOrden={setOrden} />
+					<Filter.ByScore sethomePage={sethomePage} setOrden={setOrden} />
+					<Filter.Created />
+				</div>
+				<Paginado
+					recipesPerPage={recipesPerPage}
+					allRecipes={allRecipes.length}
+					paginado={paginado}
+					actualPage={homePage}
+				/>
 
-			{currentRecipes.length ? (
-				typeof currentRecipes !== 'string' ? (
-					<div className={`${HomeCss.Cards}`}>
-						{currentRecipes.map((e) => {
-							return (
-								<CardReceta
-									key={e.id}
-									id={e.id}
-									title={e.title}
-									image={e.image}
-									diets={e.dietTypes}
-									dietsAPI={e.dietsAPI}
-									dish={e.dishTypes}
-									cuisines={e.cuisines}
-									healthScore={e.healthScore}
-								/>
-							);
-						})}
-					</div>
+				{currentRecipes.length ? (
+					typeof currentRecipes !== 'string' ? (
+						<div className={`${HomeCss.Cards}`}>
+							{currentRecipes.map((e) => {
+								return (
+									<CardReceta
+										key={e.id}
+										id={e.id}
+										title={e.title}
+										image={e.image}
+										diets={e.dietTypes}
+										dietsAPI={e.dietsAPI}
+										dish={e.dishTypes}
+										cuisines={e.cuisines}
+										healthScore={e.healthScore}
+									/>
+								);
+							})}
+						</div>
+					) : (
+						<h1 style={{ color: 'var(--bronce-color', fontSize: '50px' }}>{allRecipes}</h1>
+					)
 				) : (
-					<h1>No recipes Found</h1>
-				)
-			) : (
-				<h1>Loading...</h1>
-			)}
-			<Paginado
-				recipesPerPage={recipesPerPage}
-				allRecipes={allRecipes.length}
-				paginado={paginado}
-				actualPage={homePage}
-			/>
-		</MainDiv>
+					<div>
+						<img src='http://media0.giphy.com/media/3o85g3loeiLcF26OZy/giphy.gif' alt='' />
+						<h1>Loading...</h1>
+					</div>
+				)}
+				<Paginado
+					recipesPerPage={recipesPerPage}
+					allRecipes={allRecipes.length}
+					paginado={paginado}
+					actualPage={homePage}
+				/>
+			</MainDiv>
+			<footer className={`${HomeCss.Footer}`}>
+				<h2>The End.</h2>
+			</footer>
+		</div>
 	);
 }

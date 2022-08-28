@@ -11,7 +11,7 @@ import {
 export function ByTypes() {
 	const dispatch = useDispatch();
 	const dietTypes = useSelector((state) => state.types);
-
+	//console.log('💥💥💥 / file: Filtros.jsx / line 14 / ByTypes / dietTypes', dietTypes);
 	function handleFilterTypes(e) {
 		dispatch(filterByTypes(e.target.value));
 	}

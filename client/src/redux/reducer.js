@@ -59,15 +59,14 @@ function reducer(state = initialState, action) {
 			};
 		case FILTER_TYPE:
 			const allRecipes = state.allRecipes;
+
 			const statusFiltered =
 				action.payload === 'All'
 					? allRecipes
-					: allRecipes.filter((e) =>
-							e.diets
-								? e.diets.includes(action.payload)
-								: e.dietTypes
-								? e.dietsAPI.includes(action.payload)
-								: 'No Matches Found!'
+					: allRecipes.filter((r) =>
+							r.dietsAPI !== null
+								? r.dietsAPI.includes(action.payload)
+								: r.dietTypes.map((d) => d.title).includes(action.payload)
 					  );
 			return {
 				...state,

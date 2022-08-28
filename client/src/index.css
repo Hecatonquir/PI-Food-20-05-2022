@@ -11,10 +11,13 @@
 	--white-color: #ffffff;
 }
 body {
-	background: url('https://img.freepik.com/free-photo/kitchen-cooking-background_107389-2345.jpg?w=2000');
+	background: url('https://i.pinimg.com/originals/25/19/2f/25192f4eda302e18aece7516878ae9e5.jpg');
+	position: relative;
+	rotate: 0deg;
 	height: 97.4vh;
 	background-size: cover;
 	background-repeat: repeat;
 	margin-bottom: 0rem;
 	padding-bottom: 0rem;
+	/* overflow: hidden; */
 }

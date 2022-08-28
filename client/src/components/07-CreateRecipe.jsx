@@ -197,10 +197,10 @@ export default function NewRecipe() {
 								</ul>
 							</div>
 						</div>
-						<div className={FormCSS.Zone}>
+						<div className={FormCSS.DietZone}>
 							<label>Diet Types: </label>
-							<div className={FormCSS.Input}>
-								<ul className={FormCSS.Checkbox}>
+							<div className={FormCSS.InputCheckbox}>
+								<ul className={FormCSS.CheckboxArea}>
 									{dietTypes.map((d) => {
 										return (
 											<li key={d.title} className={FormCSS.List}>

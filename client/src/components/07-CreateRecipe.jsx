@@ -11,7 +11,7 @@ import FormCSS from './styles/CreateRecipe.module.css';
 export default function NewRecipe() {
 	const dispatch = useDispatch();
 	const dietTypes = useSelector((state) => state.types);
-	dietTypes.pop();
+	if (dietTypes[dietTypes.length - 1]?.title === null) dietTypes.pop();
 	const History = useHistory();
 	const [verif, setVerif] = useState({});
 	const dishTypes = [
@@ -100,7 +100,7 @@ export default function NewRecipe() {
 			alert('New Recipe Created!');
 			History.push('/recetasCreadas');
 		} else {
-			alert('Tiene que insertar los datos correctamente!');
+			alert('Please Fill All Inputs');
 		}
 	};
 
@@ -223,8 +223,14 @@ export default function NewRecipe() {
 							</div>
 						</div>
 					</div>
-					<div style={{ display: 'flex', justifyContent: 'center' }}>
-						<button type='submit'>CREAR</button>
+					<div
+						style={{
+							display: 'flex',
+							justifyContent: 'center',
+						}}>
+						<button type='submit' className={FormCSS.button}>
+							Create
+						</button>
 					</div>
 				</form>
 			</div>

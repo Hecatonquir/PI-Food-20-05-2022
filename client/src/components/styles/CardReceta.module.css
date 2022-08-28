@@ -29,6 +29,7 @@
 }
 .img__img {
 	width: 100%;
+	height: 30vh;
 }
 .img__wrap:hover .img__img {
 	transform: scale(1.1);

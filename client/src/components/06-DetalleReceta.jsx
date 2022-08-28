@@ -49,7 +49,7 @@ export default function DetalleRecetaCreada(props) {
 							<h2 style={{ margin: '0rem 4rem' }}>{healthScore}</h2>
 						</span>
 					</div>
-					<div>
+					<div style={{ width: '100%' }}>
 						<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start' }}>
 							<h3>Type of Dish:</h3>
 							<h4>{dishTypes ? dishTypes : 'No Types Found'}</h4>

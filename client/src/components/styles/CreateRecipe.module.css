@@ -77,3 +77,19 @@
 	height: fit-content;
 	margin: 0 1rem;
 }
+.button {
+	margin: 0.2rem;
+	padding: 0.2rem;
+	background-color: var(--black-color);
+	color: var(--bronce-color);
+	font-size: 30px;
+	border-radius: 5px;
+}
+.button:hover {
+	margin: 0.2rem;
+	padding: 0.2rem;
+	background-color: var(--grey-color);
+	color: var(--gold-color);
+	font-size: 30px;
+	border-radius: 5px;
+}

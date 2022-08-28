@@ -1,28 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteDBRecipes, getAllRecipes } from '../redux/actions';
 import { MainDiv } from './styles/MainDiv.styled';
 import Navbar from './00-Navbar';
 import CardReceta from './03-CardReceta';
+import HomeCss from './styles/Home.module.css';
 
 export default function RecetasCreadas(props) {
 	const dispatch = useDispatch();
 	const allRecipes = useSelector((state) => state.recipes);
+	const [deleteR, setDeleteR] = useState(false);
 
 	const createdRecipes = allRecipes.filter((r) => !r.idAPI);
 
 	let HandleDelete = (ev, id) => {
 		dispatch(deleteDBRecipes(id));
+		setDeleteR(true);
 	};
 	React.useEffect(() => {
 		dispatch(getAllRecipes());
-	}, [dispatch]);
+		setDeleteR(false);
+	}, [dispatch, deleteR]);
 
 	return (
 		<MainDiv>
 			<Navbar />
-			<h1>These are the created Recipes:</h1>
-			<div>
+			<h1
+				style={{
+					backgroundColor: 'var(--black-color)',
+					color: 'var(--bronce-color)',
+					borderRadius: '10px',
+					padding: '0.5rem',
+				}}>
+				Recently Created Recipes:
+			</h1>
+			<div className={`${HomeCss.Cards}`}>
 				{createdRecipes?.map((e) => (
 					<div key={e.id}>
 						<CardReceta
@@ -35,8 +47,15 @@ export default function RecetasCreadas(props) {
 							cuisines={e.cuisines}
 							healthScore={e.healthScore}
 						/>
-						<button onClick={(ev) => HandleDelete(ev, e.id)}>ELIMINAR</button>
-						<h3>_______________________________</h3>
+						<button
+							onClick={(ev) => HandleDelete(ev, e.id)}
+							style={{
+								color: 'red',
+								padding: '0.5rem',
+							}}>
+							DELETE
+						</button>
+
 						<br />
 					</div>
 				))}

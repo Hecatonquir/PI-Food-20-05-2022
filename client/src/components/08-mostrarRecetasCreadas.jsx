@@ -1,19 +1,15 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import CardReceta from './03-CardReceta';
 import { deleteDBRecipes, getAllRecipes } from '../redux/actions';
 import { MainDiv } from './styles/MainDiv.styled';
 import Navbar from './00-Navbar';
+import CardReceta from './03-CardReceta';
 
 export default function RecetasCreadas(props) {
 	const dispatch = useDispatch();
 	const allRecipes = useSelector((state) => state.recipes);
 
 	const createdRecipes = allRecipes.filter((r) => !r.idAPI);
-	console.log(
-		'🟢🟢🟢 / file: 08-mostrarRecetasCreadas.jsx / line 13 / RecetasCreadas / createdRecipes',
-		createdRecipes
-	);
 
 	let HandleDelete = (ev, id) => {
 		dispatch(deleteDBRecipes(id));
@@ -25,9 +21,7 @@ export default function RecetasCreadas(props) {
 	return (
 		<MainDiv>
 			<Navbar />
-
 			<h1>These are the created Recipes:</h1>
-
 			<div>
 				{createdRecipes?.map((e) => (
 					<div key={e.id}>

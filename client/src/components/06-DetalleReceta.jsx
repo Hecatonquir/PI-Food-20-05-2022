@@ -2,8 +2,9 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRecipeById } from '../redux/actions';
 import Navbar from './00-Navbar';
-import './styles/DetalleReceta.css';
 import { MainDiv } from './styles/MainDiv.styled';
+
+import DetailCss from './styles/DetalleReceta.module.css';
 
 export default function DetalleRecetaCreada(props) {
 	let { id } = props.match.params;
@@ -13,7 +14,7 @@ export default function DetalleRecetaCreada(props) {
 	}, [dispatch, id]);
 	const foundRecipe = useSelector((state) => state.detail);
 
-	console.log(foundRecipe);
+	//console.log(foundRecipe);
 
 	const image = foundRecipe[0] ? foundRecipe.find((e) => e.image)?.image : foundRecipe.image;
 	const title = foundRecipe[0] ? foundRecipe.find((e) => e.title)?.title : foundRecipe.title;
@@ -38,24 +39,37 @@ export default function DetalleRecetaCreada(props) {
 	return (
 		<MainDiv>
 			<Navbar />
-			<div>
-				{foundRecipe ? (
-					<div key={id}>
-						<br />
+			{foundRecipe ? (
+				<div className={DetailCss.Main}>
+					<div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
 						<img src={image} alt={title} />
-						<h4>Nombre: {title} </h4>
-						<h3>Tipo de Plato: {dishTypes ? dishTypes : 'No se encontró el tipo de plato'}</h3>
-						<div className='DietTypes'>Tipos de dietas: {diets ? diets : 'No Encontré Dietas'}</div>
-						<h4>
-							Resumen del plato: <div dangerouslySetInnerHTML={{ __html: summary }}></div>{' '}
-						</h4>
-						<h3>Health Score: {healthScore}</h3>
-						<h4>
-							Paso a paso: {analyzedInstructions ? analyzedInstructions : 'No encontré pasos a seguir'}
-						</h4>
+						<h2> {title} </h2>
+						<span style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start' }}>
+							<h3>HealthScore: </h3>
+							<h2 style={{ margin: '0rem 4rem' }}>{healthScore}</h2>
+						</span>
 					</div>
-				) : null}
-			</div>
+					<div>
+						<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start' }}>
+							<h3>Type of Dish:</h3>
+							<h4>{dishTypes ? dishTypes : 'No Types Found'}</h4>
+						</div>
+						<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start' }}>
+							<h3>Diet Types:</h3> <h4>{diets ? diets : 'No Diet Types Found'}</h4>
+						</div>
+						<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start' }}>
+							<h3>Summary: </h3>
+							<h4>
+								<div dangerouslySetInnerHTML={{ __html: summary }}></div>
+							</h4>
+						</div>
+						<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start' }}>
+							<h3>Step By Step: </h3>
+							<h4>{analyzedInstructions ? analyzedInstructions : 'No Instructions Found'}</h4>
+						</div>
+					</div>
+				</div>
+			) : null}
 		</MainDiv>
 	);
 }

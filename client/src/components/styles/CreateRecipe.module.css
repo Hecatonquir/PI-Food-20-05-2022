@@ -1,0 +1,79 @@
+.Main {
+	background-color: rgba(204, 212, 220, 0.9);
+	width: 50%;
+}
+.Verif {
+	background-color: #000000;
+	color: red;
+	font-weight: bolder;
+	width: 40%;
+	height: 1.4rem;
+	text-align: center;
+	margin: 0.2rem 0.1rem;
+	border-radius: 10px;
+	padding: 0.5rem;
+}
+.Zone {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: flex-start;
+}
+
+.Input {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+}
+
+.Main input {
+	width: 55%;
+	margin: 0.2rem 1rem;
+	border-radius: 10px;
+	padding: 0.5rem;
+}
+.Main input.InputDietTypes {
+	width: 15%;
+	border-radius: 10px;
+	display: flex;
+	justify-content: flex-start;
+}
+
+.Main label {
+	margin: 0.2rem;
+	padding: 0.2rem;
+	background-color: var(--black-color);
+	color: var(--bronce-color);
+	font-size: 30px;
+	border-radius: 5px;
+}
+.Checkbox {
+	width: 45%;
+}
+.List {
+	display: flex;
+	flex-direction: row;
+	width: 80%;
+}
+.Main ul.InputDietTypes {
+	border-radius: 50%;
+	color: red;
+	border: 10px solid red;
+	width: 20px;
+	height: 20px;
+}
+.dietSelection {
+	background-color: var(--grey-color);
+	width: 55%;
+	height: fit-content;
+}
+.typeOfDish {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: 100%;
+}
+.SelectList {
+	height: fit-content;
+	margin: 0 1rem;
+}

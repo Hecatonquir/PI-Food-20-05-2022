@@ -2,19 +2,15 @@ export default function control(localInput) {
 	let verif = [];
 	verif.check = 'mal';
 	if (!localInput.title) {
-		verif.title = 'Insertar Nombre de la receta';
+		verif.title = 'Missing Name';
 	} else if (!localInput.summary) {
-		verif.summary = 'Insertar un resumen';
-	} else if (
-		!localInput.healthScore ||
-		localInput.healthScore < 0 ||
-		localInput.healthScore > 100
-	) {
-		verif.healthScore = 'La puntuación tiene que ser un número entre 0 y 100';
+		verif.summary = 'Missing Summary';
+	} else if (!localInput.healthScore || localInput.healthScore < 0 || localInput.healthScore > 100) {
+		verif.healthScore = 'Must Be Between 0 and 100';
 	} else if (!localInput.analyzedInstructions) {
-		verif.analyzedInstructions = 'Inserte algunos pasos a seguir!!';
+		verif.analyzedInstructions = 'Missing Instructions';
 	} else if (!localInput.image) {
-		verif.image = 'Insertá una imagen!!';
+		verif.image = 'Missing Image';
 	} else verif.check = 'bien';
 	return verif;
 }

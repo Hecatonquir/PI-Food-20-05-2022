@@ -85,7 +85,11 @@ export default function Home() {
 					)
 				) : (
 					<div>
-						<img src='http://media0.giphy.com/media/3o85g3loeiLcF26OZy/giphy.gif' alt='' />
+						<img
+							src='http://media0.giphy.com/media/3o85g3loeiLcF26OZy/giphy.gif'
+							alt=''
+							style={{ borderRadius: '50%' }}
+						/>
 						<h1>Loading...</h1>
 					</div>
 				)}

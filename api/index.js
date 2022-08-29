@@ -24,7 +24,7 @@ const { conn } = require('./src/db.js');
 const { upDietTypes, getApiRecipes } = require('./src/functions.js');
 
 // Syncing all the models at once.
-conn.sync({ force: true }).then(() => {
+conn.sync({ force: false }).then(() => {
 	server.listen(process.env.PORT, async () => {
 		console.log(`%s listening at ${process.env.PORT}`); // eslint-disable-line no-console
 		await upDietTypes();
